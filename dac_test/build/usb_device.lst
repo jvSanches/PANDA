@@ -1,0 +1,334 @@
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"usb_device.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.MyUsbSend,"ax",%progbits
+  16              		.align	1
+  17              		.global	MyUsbSend
+  18              		.arch armv6s-m
+  19              		.syntax unified
+  20              		.code	16
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	MyUsbSend:
+  25              	.LFB43:
+  26              		.file 1 "Src/usb_device.c"
+   1:Src/usb_device.c **** /* USER CODE BEGIN Header */
+   2:Src/usb_device.c **** /**
+   3:Src/usb_device.c ****   ******************************************************************************
+   4:Src/usb_device.c ****   * @file           : usb_device.c
+   5:Src/usb_device.c ****   * @version        : v2.0_Cube
+   6:Src/usb_device.c ****   * @brief          : This file implements the USB Device
+   7:Src/usb_device.c ****   ******************************************************************************
+   8:Src/usb_device.c ****   * @attention
+   9:Src/usb_device.c ****   *
+  10:Src/usb_device.c ****   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  11:Src/usb_device.c ****   * All rights reserved.</center></h2>
+  12:Src/usb_device.c ****   *
+  13:Src/usb_device.c ****   * This software component is licensed by ST under Ultimate Liberty license
+  14:Src/usb_device.c ****   * SLA0044, the "License"; You may not use this file except in compliance with
+  15:Src/usb_device.c ****   * the License. You may obtain a copy of the License at:
+  16:Src/usb_device.c ****   *                             www.st.com/SLA0044
+  17:Src/usb_device.c ****   *
+  18:Src/usb_device.c ****   ******************************************************************************
+  19:Src/usb_device.c ****   */
+  20:Src/usb_device.c **** /* USER CODE END Header */
+  21:Src/usb_device.c **** 
+  22:Src/usb_device.c **** /* Includes ------------------------------------------------------------------*/
+  23:Src/usb_device.c **** 
+  24:Src/usb_device.c **** #include "usb_device.h"
+  25:Src/usb_device.c **** #include "usbd_core.h"
+  26:Src/usb_device.c **** #include "usbd_desc.h"
+  27:Src/usb_device.c **** #include "usbd_cdc.h"
+  28:Src/usb_device.c **** #include "usbd_cdc_if.h"
+  29:Src/usb_device.c **** 
+  30:Src/usb_device.c **** /* USER CODE BEGIN Includes */
+  31:Src/usb_device.c **** 
+  32:Src/usb_device.c **** /* USER CODE END Includes */
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 2
+
+
+  33:Src/usb_device.c **** 
+  34:Src/usb_device.c **** /* USER CODE BEGIN PV */
+  35:Src/usb_device.c **** /* Private variables ---------------------------------------------------------*/
+  36:Src/usb_device.c **** 
+  37:Src/usb_device.c **** /* USER CODE END PV */
+  38:Src/usb_device.c **** 
+  39:Src/usb_device.c **** /* USER CODE BEGIN PFP */
+  40:Src/usb_device.c **** /* Private function prototypes -----------------------------------------------*/
+  41:Src/usb_device.c **** 
+  42:Src/usb_device.c **** /* USER CODE END PFP */
+  43:Src/usb_device.c **** 
+  44:Src/usb_device.c **** /* USB Device Core handle declaration. */
+  45:Src/usb_device.c **** USBD_HandleTypeDef hUsbDeviceFS;
+  46:Src/usb_device.c **** 
+  47:Src/usb_device.c **** /*
+  48:Src/usb_device.c ****  * -- Insert your variables declaration here --
+  49:Src/usb_device.c ****  */
+  50:Src/usb_device.c **** /* USER CODE BEGIN 0 */
+  51:Src/usb_device.c **** 
+  52:Src/usb_device.c **** /* USER CODE END 0 */
+  53:Src/usb_device.c **** 
+  54:Src/usb_device.c **** /*
+  55:Src/usb_device.c ****  * -- Insert your external function declaration here --
+  56:Src/usb_device.c ****  */
+  57:Src/usb_device.c **** /* USER CODE BEGIN 1 */
+  58:Src/usb_device.c **** 
+  59:Src/usb_device.c **** void MyUsbSend(){
+  27              		.loc 1 59 17 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 00B5     		push	{lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 14, -4
+  35 0002 83B0     		sub	sp, sp, #12
+  36              	.LCFI1:
+  37              		.cfi_def_cfa_offset 16
+  60:Src/usb_device.c ****   uint8_t testDataToSend[8];
+  38              		.loc 1 60 3 view .LVU1
+  61:Src/usb_device.c ****  
+  62:Src/usb_device.c ****   for (uint8_t i = 0; i < 8; i++)
+  39              		.loc 1 62 3 view .LVU2
+  40              	.LBB2:
+  41              		.loc 1 62 8 view .LVU3
+  42              	.LVL0:
+  43              		.loc 1 62 16 is_stmt 0 view .LVU4
+  44 0004 0023     		movs	r3, #0
+  45              		.loc 1 62 3 view .LVU5
+  46 0006 03E0     		b	.L2
+  47              	.LVL1:
+  48              	.L3:
+  63:Src/usb_device.c ****   {
+  64:Src/usb_device.c ****     testDataToSend[i] = i;
+  49              		.loc 1 64 5 is_stmt 1 discriminator 3 view .LVU6
+  50              		.loc 1 64 23 is_stmt 0 discriminator 3 view .LVU7
+  51 0008 6A46     		mov	r2, sp
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 3
+
+
+  52 000a D354     		strb	r3, [r2, r3]
+  62:Src/usb_device.c ****   {
+  53              		.loc 1 62 30 is_stmt 1 discriminator 3 view .LVU8
+  62:Src/usb_device.c ****   {
+  54              		.loc 1 62 31 is_stmt 0 discriminator 3 view .LVU9
+  55 000c 0133     		adds	r3, r3, #1
+  56              	.LVL2:
+  62:Src/usb_device.c ****   {
+  57              		.loc 1 62 31 discriminator 3 view .LVU10
+  58 000e DBB2     		uxtb	r3, r3
+  59              	.LVL3:
+  60              	.L2:
+  62:Src/usb_device.c ****   {
+  61              		.loc 1 62 23 is_stmt 1 discriminator 1 view .LVU11
+  62:Src/usb_device.c ****   {
+  62              		.loc 1 62 3 is_stmt 0 discriminator 1 view .LVU12
+  63 0010 072B     		cmp	r3, #7
+  64 0012 F9D9     		bls	.L3
+  65              	.LBE2:
+  65:Src/usb_device.c ****   }
+  66:Src/usb_device.c ****   CDC_Transmit_FS(testDataToSend, 8);
+  66              		.loc 1 66 3 is_stmt 1 view .LVU13
+  67 0014 0821     		movs	r1, #8
+  68 0016 6846     		mov	r0, sp
+  69 0018 FFF7FEFF 		bl	CDC_Transmit_FS
+  70              	.LVL4:
+  67:Src/usb_device.c **** }
+  71              		.loc 1 67 1 is_stmt 0 view .LVU14
+  72 001c 03B0     		add	sp, sp, #12
+  73              		@ sp needed
+  74 001e 00BD     		pop	{pc}
+  75              		.cfi_endproc
+  76              	.LFE43:
+  78              		.section	.text.MX_USB_DEVICE_Init,"ax",%progbits
+  79              		.align	1
+  80              		.global	MX_USB_DEVICE_Init
+  81              		.syntax unified
+  82              		.code	16
+  83              		.thumb_func
+  84              		.fpu softvfp
+  86              	MX_USB_DEVICE_Init:
+  87              	.LFB44:
+  68:Src/usb_device.c **** /* USER CODE END 1 */
+  69:Src/usb_device.c **** 
+  70:Src/usb_device.c **** /**
+  71:Src/usb_device.c ****   * Init USB device Library, add supported class and start the library
+  72:Src/usb_device.c ****   * @retval None
+  73:Src/usb_device.c ****   */
+  74:Src/usb_device.c **** void MX_USB_DEVICE_Init(void)
+  75:Src/usb_device.c **** {
+  88              		.loc 1 75 1 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92 0000 10B5     		push	{r4, lr}
+  93              	.LCFI2:
+  94              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 4
+
+
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+  76:Src/usb_device.c ****   /* USER CODE BEGIN USB_DEVICE_Init_PreTreatment */
+  77:Src/usb_device.c ****   
+  78:Src/usb_device.c ****   /* USER CODE END USB_DEVICE_Init_PreTreatment */
+  79:Src/usb_device.c ****   
+  80:Src/usb_device.c ****   /* Init Device Library, add supported class and start the library. */
+  81:Src/usb_device.c ****   if (USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+  97              		.loc 1 81 3 view .LVU16
+  98              		.loc 1 81 7 is_stmt 0 view .LVU17
+  99 0002 0022     		movs	r2, #0
+ 100 0004 1149     		ldr	r1, .L13
+ 101 0006 1248     		ldr	r0, .L13+4
+ 102 0008 FFF7FEFF 		bl	USBD_Init
+ 103              	.LVL5:
+ 104              		.loc 1 81 6 view .LVU18
+ 105 000c 0028     		cmp	r0, #0
+ 106 000e 11D1     		bne	.L9
+ 107              	.L5:
+  82:Src/usb_device.c ****   {
+  83:Src/usb_device.c ****     Error_Handler();
+  84:Src/usb_device.c ****   }
+  85:Src/usb_device.c ****   if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+ 108              		.loc 1 85 3 is_stmt 1 view .LVU19
+ 109              		.loc 1 85 7 is_stmt 0 view .LVU20
+ 110 0010 1049     		ldr	r1, .L13+8
+ 111 0012 0F48     		ldr	r0, .L13+4
+ 112 0014 FFF7FEFF 		bl	USBD_RegisterClass
+ 113              	.LVL6:
+ 114              		.loc 1 85 6 view .LVU21
+ 115 0018 0028     		cmp	r0, #0
+ 116 001a 0ED1     		bne	.L10
+ 117              	.L6:
+  86:Src/usb_device.c ****   {
+  87:Src/usb_device.c ****     Error_Handler();
+  88:Src/usb_device.c ****   }
+  89:Src/usb_device.c ****   if (USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS) != USBD_OK)
+ 118              		.loc 1 89 3 is_stmt 1 view .LVU22
+ 119              		.loc 1 89 7 is_stmt 0 view .LVU23
+ 120 001c 0E49     		ldr	r1, .L13+12
+ 121 001e 0C48     		ldr	r0, .L13+4
+ 122 0020 FFF7FEFF 		bl	USBD_CDC_RegisterInterface
+ 123              	.LVL7:
+ 124              		.loc 1 89 6 view .LVU24
+ 125 0024 0028     		cmp	r0, #0
+ 126 0026 0BD1     		bne	.L11
+ 127              	.L7:
+  90:Src/usb_device.c ****   {
+  91:Src/usb_device.c ****     Error_Handler();
+  92:Src/usb_device.c ****   }
+  93:Src/usb_device.c ****   if (USBD_Start(&hUsbDeviceFS) != USBD_OK)
+ 128              		.loc 1 93 3 is_stmt 1 view .LVU25
+ 129              		.loc 1 93 7 is_stmt 0 view .LVU26
+ 130 0028 0948     		ldr	r0, .L13+4
+ 131 002a FFF7FEFF 		bl	USBD_Start
+ 132              	.LVL8:
+ 133              		.loc 1 93 6 view .LVU27
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 5
+
+
+ 134 002e 0028     		cmp	r0, #0
+ 135 0030 09D1     		bne	.L12
+ 136              	.L4:
+  94:Src/usb_device.c ****   {
+  95:Src/usb_device.c ****     Error_Handler();
+  96:Src/usb_device.c ****   }
+  97:Src/usb_device.c **** 
+  98:Src/usb_device.c ****   /* USER CODE BEGIN USB_DEVICE_Init_PostTreatment */
+  99:Src/usb_device.c ****   
+ 100:Src/usb_device.c ****   /* USER CODE END USB_DEVICE_Init_PostTreatment */
+ 101:Src/usb_device.c **** }
+ 137              		.loc 1 101 1 view .LVU28
+ 138              		@ sp needed
+ 139 0032 10BD     		pop	{r4, pc}
+ 140              	.L9:
+  83:Src/usb_device.c ****   }
+ 141              		.loc 1 83 5 is_stmt 1 view .LVU29
+ 142 0034 FFF7FEFF 		bl	Error_Handler
+ 143              	.LVL9:
+ 144 0038 EAE7     		b	.L5
+ 145              	.L10:
+  87:Src/usb_device.c ****   }
+ 146              		.loc 1 87 5 view .LVU30
+ 147 003a FFF7FEFF 		bl	Error_Handler
+ 148              	.LVL10:
+ 149 003e EDE7     		b	.L6
+ 150              	.L11:
+  91:Src/usb_device.c ****   }
+ 151              		.loc 1 91 5 view .LVU31
+ 152 0040 FFF7FEFF 		bl	Error_Handler
+ 153              	.LVL11:
+ 154 0044 F0E7     		b	.L7
+ 155              	.L12:
+  95:Src/usb_device.c ****   }
+ 156              		.loc 1 95 5 view .LVU32
+ 157 0046 FFF7FEFF 		bl	Error_Handler
+ 158              	.LVL12:
+ 159              		.loc 1 101 1 is_stmt 0 view .LVU33
+ 160 004a F2E7     		b	.L4
+ 161              	.L14:
+ 162              		.align	2
+ 163              	.L13:
+ 164 004c 00000000 		.word	FS_Desc
+ 165 0050 00000000 		.word	hUsbDeviceFS
+ 166 0054 00000000 		.word	USBD_CDC
+ 167 0058 00000000 		.word	USBD_Interface_fops_FS
+ 168              		.cfi_endproc
+ 169              	.LFE44:
+ 171              		.comm	hUsbDeviceFS,708,4
+ 172              		.text
+ 173              	.Letext0:
+ 174              		.file 2 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_ty
+ 175              		.file 3 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 176              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
+ 177              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ 178              		.file 6 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 179              		.file 7 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 6
+
+
+ 180              		.file 8 "d:\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\std
+ 181              		.file 9 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 182              		.file 10 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\stdlib.h"
+ 183              		.file 11 "Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h"
+ 184              		.file 12 "Inc/usbd_desc.h"
+ 185              		.file 13 "Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h"
+ 186              		.file 14 "Inc/usbd_cdc_if.h"
+ 187              		.file 15 "Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h"
+ 188              		.file 16 "Inc/main.h"
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usb_device.c
+C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s:16     .text.MyUsbSend:00000000 $t
+C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s:24     .text.MyUsbSend:00000000 MyUsbSend
+C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s:79     .text.MX_USB_DEVICE_Init:00000000 $t
+C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s:86     .text.MX_USB_DEVICE_Init:00000000 MX_USB_DEVICE_Init
+C:\Users\joaov\AppData\Local\Temp\ccr5ilbz.s:164    .text.MX_USB_DEVICE_Init:0000004c $d
+                            *COM*:000002c4 hUsbDeviceFS
+
+UNDEFINED SYMBOLS
+CDC_Transmit_FS
+USBD_Init
+USBD_RegisterClass
+USBD_CDC_RegisterInterface
+USBD_Start
+Error_Handler
+FS_Desc
+USBD_CDC
+USBD_Interface_fops_FS

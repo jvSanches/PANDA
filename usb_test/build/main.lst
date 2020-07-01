@@ -1,0 +1,465 @@
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SystemClock_Config,"ax",%progbits
+  16              		.align	1
+  17              		.global	SystemClock_Config
+  18              		.arch armv6s-m
+  19              		.syntax unified
+  20              		.code	16
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	SystemClock_Config:
+  25              	.LFB44:
+  26              		.file 1 "Src/main.c"
+   1:Src/main.c    **** /* USER CODE BEGIN Header */
+   2:Src/main.c    **** /**
+   3:Src/main.c    ****   ******************************************************************************
+   4:Src/main.c    ****   * @file           : main.c
+   5:Src/main.c    ****   * @brief          : Main program body
+   6:Src/main.c    ****   ******************************************************************************
+   7:Src/main.c    ****   * @attention
+   8:Src/main.c    ****   *
+   9:Src/main.c    ****   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  10:Src/main.c    ****   * All rights reserved.</center></h2>
+  11:Src/main.c    ****   *
+  12:Src/main.c    ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/main.c    ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/main.c    ****   * License. You may obtain a copy of the License at:
+  15:Src/main.c    ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/main.c    ****   *
+  17:Src/main.c    ****   ******************************************************************************
+  18:Src/main.c    ****   */
+  19:Src/main.c    **** /* USER CODE END Header */
+  20:Src/main.c    **** 
+  21:Src/main.c    **** /* Includes ------------------------------------------------------------------*/
+  22:Src/main.c    **** #include "main.h"
+  23:Src/main.c    **** #include "usb_device.h"
+  24:Src/main.c    **** #include "gpio.h"
+  25:Src/main.c    **** 
+  26:Src/main.c    **** /* Private includes ----------------------------------------------------------*/
+  27:Src/main.c    **** /* USER CODE BEGIN Includes */
+  28:Src/main.c    **** 
+  29:Src/main.c    **** /* USER CODE END Includes */
+  30:Src/main.c    **** 
+  31:Src/main.c    **** /* Private typedef -----------------------------------------------------------*/
+  32:Src/main.c    **** /* USER CODE BEGIN PTD */
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 2
+
+
+  33:Src/main.c    **** 
+  34:Src/main.c    **** /* USER CODE END PTD */
+  35:Src/main.c    **** 
+  36:Src/main.c    **** /* Private define ------------------------------------------------------------*/
+  37:Src/main.c    **** /* USER CODE BEGIN PD */
+  38:Src/main.c    **** /* USER CODE END PD */
+  39:Src/main.c    **** 
+  40:Src/main.c    **** /* Private macro -------------------------------------------------------------*/
+  41:Src/main.c    **** /* USER CODE BEGIN PM */
+  42:Src/main.c    **** 
+  43:Src/main.c    **** /* USER CODE END PM */
+  44:Src/main.c    **** 
+  45:Src/main.c    **** /* Private variables ---------------------------------------------------------*/
+  46:Src/main.c    **** 
+  47:Src/main.c    **** /* USER CODE BEGIN PV */
+  48:Src/main.c    **** 
+  49:Src/main.c    **** /* USER CODE END PV */
+  50:Src/main.c    **** 
+  51:Src/main.c    **** /* Private function prototypes -----------------------------------------------*/
+  52:Src/main.c    **** void SystemClock_Config(void);
+  53:Src/main.c    **** /* USER CODE BEGIN PFP */
+  54:Src/main.c    **** 
+  55:Src/main.c    **** /* USER CODE END PFP */
+  56:Src/main.c    **** 
+  57:Src/main.c    **** /* Private user code ---------------------------------------------------------*/
+  58:Src/main.c    **** /* USER CODE BEGIN 0 */
+  59:Src/main.c    **** 
+  60:Src/main.c    **** /* USER CODE END 0 */
+  61:Src/main.c    **** 
+  62:Src/main.c    **** /**
+  63:Src/main.c    ****   * @brief  The application entry point.
+  64:Src/main.c    ****   * @retval int
+  65:Src/main.c    ****   */
+  66:Src/main.c    **** int main(void)
+  67:Src/main.c    **** {
+  68:Src/main.c    ****   /* USER CODE BEGIN 1 */
+  69:Src/main.c    **** 
+  70:Src/main.c    ****   /* USER CODE END 1 */
+  71:Src/main.c    ****   
+  72:Src/main.c    **** 
+  73:Src/main.c    ****   /* MCU Configuration--------------------------------------------------------*/
+  74:Src/main.c    **** 
+  75:Src/main.c    ****   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  76:Src/main.c    ****   HAL_Init();
+  77:Src/main.c    **** 
+  78:Src/main.c    ****   /* USER CODE BEGIN Init */
+  79:Src/main.c    **** 
+  80:Src/main.c    ****   /* USER CODE END Init */
+  81:Src/main.c    **** 
+  82:Src/main.c    ****   /* Configure the system clock */
+  83:Src/main.c    ****   SystemClock_Config();
+  84:Src/main.c    **** 
+  85:Src/main.c    ****   /* USER CODE BEGIN SysInit */
+  86:Src/main.c    **** 
+  87:Src/main.c    ****   /* USER CODE END SysInit */
+  88:Src/main.c    **** 
+  89:Src/main.c    ****   /* Initialize all configured peripherals */
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 3
+
+
+  90:Src/main.c    ****   MX_GPIO_Init();
+  91:Src/main.c    ****   MX_USB_DEVICE_Init();
+  92:Src/main.c    ****   /* USER CODE BEGIN 2 */
+  93:Src/main.c    ****   uint8_t testDataToSend[8];
+  94:Src/main.c    ****  
+  95:Src/main.c    ****   for (uint8_t i = 0; i < 8; i++)
+  96:Src/main.c    ****   {
+  97:Src/main.c    ****     testDataToSend[i] = i;
+  98:Src/main.c    ****   }
+  99:Src/main.c    **** 
+ 100:Src/main.c    ****   /* USER CODE END 2 */
+ 101:Src/main.c    **** 
+ 102:Src/main.c    ****   /* Infinite loop */
+ 103:Src/main.c    ****   /* USER CODE BEGIN WHILE */
+ 104:Src/main.c    ****   while (1)
+ 105:Src/main.c    ****   {
+ 106:Src/main.c    ****     /* USER CODE END WHILE */
+ 107:Src/main.c    **** 
+ 108:Src/main.c    ****     /* USER CODE BEGIN 3 */
+ 109:Src/main.c    ****     CDC_Transmit_FS(testDataToSend, 8);
+ 110:Src/main.c    ****     HAL_Delay(500);
+ 111:Src/main.c    ****   }
+ 112:Src/main.c    ****   /* USER CODE END 3 */
+ 113:Src/main.c    **** }
+ 114:Src/main.c    **** 
+ 115:Src/main.c    **** /**
+ 116:Src/main.c    ****   * @brief System Clock Configuration
+ 117:Src/main.c    ****   * @retval None
+ 118:Src/main.c    ****   */
+ 119:Src/main.c    **** void SystemClock_Config(void)
+ 120:Src/main.c    **** {
+  27              		.loc 1 120 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 96
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 98B0     		sub	sp, sp, #96
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 104
+ 121:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  39              		.loc 1 121 3 view .LVU1
+  40              		.loc 1 121 22 is_stmt 0 view .LVU2
+  41 0004 3022     		movs	r2, #48
+  42 0006 0021     		movs	r1, #0
+  43 0008 0CA8     		add	r0, sp, #48
+  44 000a FFF7FEFF 		bl	memset
+  45              	.LVL0:
+ 122:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  46              		.loc 1 122 3 is_stmt 1 view .LVU3
+  47              		.loc 1 122 22 is_stmt 0 view .LVU4
+  48 000e 1022     		movs	r2, #16
+  49 0010 0021     		movs	r1, #0
+  50 0012 07A8     		add	r0, sp, #28
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 4
+
+
+  51 0014 FFF7FEFF 		bl	memset
+  52              	.LVL1:
+ 123:Src/main.c    ****   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  53              		.loc 1 123 3 is_stmt 1 view .LVU5
+  54              		.loc 1 123 28 is_stmt 0 view .LVU6
+  55 0018 1C22     		movs	r2, #28
+  56 001a 0021     		movs	r1, #0
+  57 001c 6846     		mov	r0, sp
+  58 001e FFF7FEFF 		bl	memset
+  59              	.LVL2:
+ 124:Src/main.c    **** 
+ 125:Src/main.c    ****   /** Initializes the CPU, AHB and APB busses clocks 
+ 126:Src/main.c    ****   */
+ 127:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
+  60              		.loc 1 127 3 is_stmt 1 view .LVU7
+  61              		.loc 1 127 36 is_stmt 0 view .LVU8
+  62 0022 2023     		movs	r3, #32
+  63 0024 0B93     		str	r3, [sp, #44]
+ 128:Src/main.c    ****   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
+  64              		.loc 1 128 3 is_stmt 1 view .LVU9
+  65              		.loc 1 128 32 is_stmt 0 view .LVU10
+  66 0026 1F3B     		subs	r3, r3, #31
+  67 0028 1393     		str	r3, [sp, #76]
+ 129:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  68              		.loc 1 129 3 is_stmt 1 view .LVU11
+  69              		.loc 1 129 34 is_stmt 0 view .LVU12
+  70 002a 0024     		movs	r4, #0
+ 130:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  71              		.loc 1 130 3 is_stmt 1 view .LVU13
+  72              		.loc 1 130 7 is_stmt 0 view .LVU14
+  73 002c 0BA8     		add	r0, sp, #44
+  74 002e FFF7FEFF 		bl	HAL_RCC_OscConfig
+  75              	.LVL3:
+ 131:Src/main.c    ****   {
+ 132:Src/main.c    ****     Error_Handler();
+ 133:Src/main.c    ****   }
+ 134:Src/main.c    ****   /** Initializes the CPU, AHB and APB busses clocks 
+ 135:Src/main.c    ****   */
+ 136:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+  76              		.loc 1 136 3 is_stmt 1 view .LVU15
+  77              		.loc 1 136 31 is_stmt 0 view .LVU16
+  78 0032 0723     		movs	r3, #7
+  79 0034 0793     		str	r3, [sp, #28]
+ 137:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
+ 138:Src/main.c    ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI48;
+  80              		.loc 1 138 3 is_stmt 1 view .LVU17
+  81              		.loc 1 138 34 is_stmt 0 view .LVU18
+  82 0036 043B     		subs	r3, r3, #4
+  83 0038 0893     		str	r3, [sp, #32]
+ 139:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  84              		.loc 1 139 3 is_stmt 1 view .LVU19
+  85              		.loc 1 139 35 is_stmt 0 view .LVU20
+  86 003a 0994     		str	r4, [sp, #36]
+ 140:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  87              		.loc 1 140 3 is_stmt 1 view .LVU21
+  88              		.loc 1 140 36 is_stmt 0 view .LVU22
+  89 003c 0A94     		str	r4, [sp, #40]
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 5
+
+
+ 141:Src/main.c    **** 
+ 142:Src/main.c    ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  90              		.loc 1 142 3 is_stmt 1 view .LVU23
+  91              		.loc 1 142 7 is_stmt 0 view .LVU24
+  92 003e 0121     		movs	r1, #1
+  93 0040 07A8     		add	r0, sp, #28
+  94 0042 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+  95              	.LVL4:
+ 143:Src/main.c    ****   {
+ 144:Src/main.c    ****     Error_Handler();
+ 145:Src/main.c    ****   }
+ 146:Src/main.c    ****   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
+  96              		.loc 1 146 3 is_stmt 1 view .LVU25
+  97              		.loc 1 146 38 is_stmt 0 view .LVU26
+  98 0046 8023     		movs	r3, #128
+  99 0048 9B02     		lsls	r3, r3, #10
+ 100 004a 0093     		str	r3, [sp]
+ 147:Src/main.c    ****   PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
+ 101              		.loc 1 147 3 is_stmt 1 view .LVU27
+ 102              		.loc 1 147 35 is_stmt 0 view .LVU28
+ 103 004c 0694     		str	r4, [sp, #24]
+ 148:Src/main.c    **** 
+ 149:Src/main.c    ****   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+ 104              		.loc 1 149 3 is_stmt 1 view .LVU29
+ 105              		.loc 1 149 7 is_stmt 0 view .LVU30
+ 106 004e 6846     		mov	r0, sp
+ 107 0050 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 108              	.LVL5:
+ 150:Src/main.c    ****   {
+ 151:Src/main.c    ****     Error_Handler();
+ 152:Src/main.c    ****   }
+ 153:Src/main.c    **** }
+ 109              		.loc 1 153 1 view .LVU31
+ 110 0054 18B0     		add	sp, sp, #96
+ 111              		@ sp needed
+ 112 0056 10BD     		pop	{r4, pc}
+ 113              		.cfi_endproc
+ 114              	.LFE44:
+ 116              		.section	.text.main,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	main
+ 119              		.syntax unified
+ 120              		.code	16
+ 121              		.thumb_func
+ 122              		.fpu softvfp
+ 124              	main:
+ 125              	.LFB43:
+  67:Src/main.c    ****   /* USER CODE BEGIN 1 */
+ 126              		.loc 1 67 1 is_stmt 1 view -0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 8
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130 0000 00B5     		push	{lr}
+ 131              	.LCFI2:
+ 132              		.cfi_def_cfa_offset 4
+ 133              		.cfi_offset 14, -4
+ 134 0002 83B0     		sub	sp, sp, #12
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 6
+
+
+ 135              	.LCFI3:
+ 136              		.cfi_def_cfa_offset 16
+  76:Src/main.c    **** 
+ 137              		.loc 1 76 3 view .LVU33
+ 138 0004 FFF7FEFF 		bl	HAL_Init
+ 139              	.LVL6:
+  83:Src/main.c    **** 
+ 140              		.loc 1 83 3 view .LVU34
+ 141 0008 FFF7FEFF 		bl	SystemClock_Config
+ 142              	.LVL7:
+  90:Src/main.c    ****   MX_USB_DEVICE_Init();
+ 143              		.loc 1 90 3 view .LVU35
+ 144 000c FFF7FEFF 		bl	MX_GPIO_Init
+ 145              	.LVL8:
+  91:Src/main.c    ****   /* USER CODE BEGIN 2 */
+ 146              		.loc 1 91 3 view .LVU36
+ 147 0010 FFF7FEFF 		bl	MX_USB_DEVICE_Init
+ 148              	.LVL9:
+  93:Src/main.c    ****  
+ 149              		.loc 1 93 3 view .LVU37
+  95:Src/main.c    ****   {
+ 150              		.loc 1 95 3 view .LVU38
+ 151              	.LBB2:
+  95:Src/main.c    ****   {
+ 152              		.loc 1 95 8 view .LVU39
+  95:Src/main.c    ****   {
+ 153              		.loc 1 95 16 is_stmt 0 view .LVU40
+ 154 0014 0023     		movs	r3, #0
+  95:Src/main.c    ****   {
+ 155              		.loc 1 95 3 view .LVU41
+ 156 0016 03E0     		b	.L3
+ 157              	.LVL10:
+ 158              	.L4:
+  97:Src/main.c    ****   }
+ 159              		.loc 1 97 5 is_stmt 1 discriminator 3 view .LVU42
+  97:Src/main.c    ****   }
+ 160              		.loc 1 97 23 is_stmt 0 discriminator 3 view .LVU43
+ 161 0018 6A46     		mov	r2, sp
+ 162 001a D354     		strb	r3, [r2, r3]
+  95:Src/main.c    ****   {
+ 163              		.loc 1 95 30 is_stmt 1 discriminator 3 view .LVU44
+  95:Src/main.c    ****   {
+ 164              		.loc 1 95 31 is_stmt 0 discriminator 3 view .LVU45
+ 165 001c 0133     		adds	r3, r3, #1
+ 166              	.LVL11:
+  95:Src/main.c    ****   {
+ 167              		.loc 1 95 31 discriminator 3 view .LVU46
+ 168 001e DBB2     		uxtb	r3, r3
+ 169              	.LVL12:
+ 170              	.L3:
+  95:Src/main.c    ****   {
+ 171              		.loc 1 95 23 is_stmt 1 discriminator 1 view .LVU47
+  95:Src/main.c    ****   {
+ 172              		.loc 1 95 3 is_stmt 0 discriminator 1 view .LVU48
+ 173 0020 072B     		cmp	r3, #7
+ 174 0022 F9D9     		bls	.L4
+ 175              	.LVL13:
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 7
+
+
+ 176              	.L5:
+  95:Src/main.c    ****   {
+ 177              		.loc 1 95 3 discriminator 1 view .LVU49
+ 178              	.LBE2:
+ 104:Src/main.c    ****   {
+ 179              		.loc 1 104 3 is_stmt 1 discriminator 1 view .LVU50
+ 180              	.LBB3:
+ 109:Src/main.c    ****     HAL_Delay(500);
+ 181              		.loc 1 109 5 discriminator 1 view .LVU51
+ 182 0024 0821     		movs	r1, #8
+ 183 0026 6846     		mov	r0, sp
+ 184 0028 FFF7FEFF 		bl	CDC_Transmit_FS
+ 185              	.LVL14:
+ 110:Src/main.c    ****   }
+ 186              		.loc 1 110 5 discriminator 1 view .LVU52
+ 187 002c FA20     		movs	r0, #250
+ 188 002e 4000     		lsls	r0, r0, #1
+ 189 0030 FFF7FEFF 		bl	HAL_Delay
+ 190              	.LVL15:
+ 191              	.LBE3:
+ 104:Src/main.c    ****   {
+ 192              		.loc 1 104 9 discriminator 1 view .LVU53
+ 193 0034 F6E7     		b	.L5
+ 194              		.cfi_endproc
+ 195              	.LFE43:
+ 197              		.section	.text.Error_Handler,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	Error_Handler
+ 200              		.syntax unified
+ 201              		.code	16
+ 202              		.thumb_func
+ 203              		.fpu softvfp
+ 205              	Error_Handler:
+ 206              	.LFB45:
+ 154:Src/main.c    **** 
+ 155:Src/main.c    **** /* USER CODE BEGIN 4 */
+ 156:Src/main.c    **** 
+ 157:Src/main.c    **** /* USER CODE END 4 */
+ 158:Src/main.c    **** 
+ 159:Src/main.c    **** /**
+ 160:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
+ 161:Src/main.c    ****   * @retval None
+ 162:Src/main.c    ****   */
+ 163:Src/main.c    **** void Error_Handler(void)
+ 164:Src/main.c    **** {
+ 207              		.loc 1 164 1 view -0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              		@ link register save eliminated.
+ 165:Src/main.c    ****   /* USER CODE BEGIN Error_Handler_Debug */
+ 166:Src/main.c    ****   /* User can add his own implementation to report the HAL error return state */
+ 167:Src/main.c    **** 
+ 168:Src/main.c    ****   /* USER CODE END Error_Handler_Debug */
+ 169:Src/main.c    **** }
+ 212              		.loc 1 169 1 view .LVU55
+ 213              		@ sp needed
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 8
+
+
+ 214 0000 7047     		bx	lr
+ 215              		.cfi_endproc
+ 216              	.LFE45:
+ 218              		.text
+ 219              	.Letext0:
+ 220              		.file 2 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_ty
+ 221              		.file 3 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 222              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
+ 223              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
+ 224              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h"
+ 225              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 226              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ 227              		.file 9 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 228              		.file 10 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 229              		.file 11 "d:\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\st
+ 230              		.file 12 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 231              		.file 13 "d:\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\\stdlib.h"
+ 232              		.file 14 "Inc/gpio.h"
+ 233              		.file 15 "Inc/usb_device.h"
+ 234              		.file 16 "<built-in>"
+ARM GAS  C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:16     .text.SystemClock_Config:00000000 $t
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:24     .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:117    .text.main:00000000 $t
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:124    .text.main:00000000 main
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:198    .text.Error_Handler:00000000 $t
+C:\Users\joaov\AppData\Local\Temp\ccxOPtZo.s:205    .text.Error_Handler:00000000 Error_Handler
+
+UNDEFINED SYMBOLS
+memset
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+HAL_RCCEx_PeriphCLKConfig
+HAL_Init
+MX_GPIO_Init
+MX_USB_DEVICE_Init
+CDC_Transmit_FS
+HAL_Delay
