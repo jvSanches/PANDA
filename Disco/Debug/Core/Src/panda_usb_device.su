@@ -1,0 +1,10 @@
+panda_usb_device.c:16:6:usb_queueInit	24	static
+panda_usb_device.c:24:6:usb_init	8	static
+panda_usb_device.c:33:6:usb_addToQueue	40	static
+panda_usb_device.c:53:9:usb_queuedData	16	static
+panda_usb_device.c:62:9:usb_peekQueue	24	static
+panda_usb_device.c:74:9:usb_GetByteFromQueue	24	static
+panda_usb_device.c:90:9:usb_queueDiscard	24	static
+panda_usb_device.c:106:9:usb_processFrame	40	static
+panda_usb_device.c:253:9:usb_getQueuedCommand	32	static
+panda_usb_device.c:272:6:usbController	8	static

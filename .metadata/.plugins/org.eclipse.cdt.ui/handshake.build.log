@@ -1,0 +1,10 @@
+21:38:12 **** Incremental Build of configuration Debug for project handshake ****
+make -j8 all 
+arm-none-eabi-size   handshake.elf 
+   text	   data	    bss	    dec	    hex	filename
+  36040	    388	   6436	  42864	   a770	handshake.elf
+Finished building: default.size.stdout
+ 
+
+21:38:12 Build Finished. 0 errors, 0 warnings. (took 626ms)
+

@@ -1,0 +1,41 @@
+21:37:25 **** Incremental Build of configuration Debug for project Disco ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/panda_usb_device.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F072xB -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/panda_usb_device.d" -MT"Core/Src/panda_usb_device.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/panda_usb_device.o"
+arm-none-eabi-gcc -o "Disco.elf" @"objects.list"   -mcpu=cortex-m0 -T"D:\joaov\Documents\Poli\PANDA\Disco\STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Disco.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Disco.elf
+ 
+arm-none-eabi-objdump -h -S  Disco.elf  > "Disco.list"
+arm-none-eabi-objcopy  -O binary  Disco.elf  "Disco.bin"
+arm-none-eabi-size   Disco.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40984	    392	   6504	  47880	   bb08	Disco.elf
+Finished building: default.size.stdout
+ 
+Finished building: Disco.bin
+ 
+Finished building: Disco.list
+ 
+21:37:46 **** Incremental Build of configuration Debug for project Disco ****
+make -j8 all 
+arm-none-eabi-size   Disco.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40984	    392	   6504	  47880	   bb08	Disco.elf
+Finished building: default.size.stdout
+ 
+21:39:33 **** Incremental Build of configuration Debug for project Disco ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/panda_usb_device.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F072xB -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/panda_usb_device.d" -MT"Core/Src/panda_usb_device.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/panda_usb_device.o"
+arm-none-eabi-gcc -o "Disco.elf" @"objects.list"   -mcpu=cortex-m0 -T"D:\joaov\Documents\Poli\PANDA\Disco\STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Disco.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Disco.elf
+ 
+arm-none-eabi-objdump -h -S  Disco.elf  > "Disco.list"
+arm-none-eabi-objcopy  -O binary  Disco.elf  "Disco.bin"
+arm-none-eabi-size   Disco.elf 
+   text	   data	    bss	    dec	    hex	filename
+  40988	    392	   6504	  47884	   bb0c	Disco.elf
+Finished building: default.size.stdout
+ 
+Finished building: Disco.bin
+ 
+Finished building: Disco.list
+ 

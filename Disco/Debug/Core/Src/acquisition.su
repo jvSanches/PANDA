@@ -1,0 +1,9 @@
+acquisition.c:20:10:getAnalogRead	16	static
+acquisition.c:24:6:setEncoderCount	24	static
+acquisition.c:29:6:setEncoderMode	16	static
+acquisition.c:32:9:getEncoderMode	8	static
+acquisition.c:36:10:getEncoderCount	8	static
+acquisition.c:40:6:encoderController	24	static
+acquisition.c:92:10:getEncoderDuty	8	static
+acquisition.c:96:9:getUserIn	16	static
+acquisition.c:110:6:acquisitionInit	16	static
