@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;handshake/Debug/handshake.elf&apos;" deleteContents="false" description="Delete resource &apos;handshake/Debug/handshake.elf&apos;" element1="/handshake/Debug/handshake.elf" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1599660357748"/>&#x0A;<refactoring comment="Delete resource &apos;handshake/Release/handshake.elf&apos;" deleteContents="false" description="Delete resource &apos;handshake/Release/handshake.elf&apos;" element1="/handshake/Release/handshake.elf" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1599660361181"/>
-</session>
