@@ -176,14 +176,14 @@ int main(void)
 		  }
 	  }
 
-	  if (getUserIn(1)==0){
-		  can_data[0]++;
+//	  if (getUserIn(1)==0){
+//		  can_data[0]++;
 //		  userLedMode(1);
-		  HAL_CAN_AddTxMessage(&hcan, &canTxMsg, can_data, &txMailbox);
-		  HAL_Delay(30);
+//		  HAL_CAN_AddTxMessage(&hcan, &canTxMsg, can_data, &txMailbox);
+//		  HAL_Delay(30);
 //		  userLedMode(0);
-	  }
-	  userLedMode(canRx[0]%2);
+//	  }
+//	  userLedMode(canRx[0]%2);
 
 
 //	  if (getUserIn(1) == 0){
