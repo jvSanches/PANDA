@@ -1,0 +1,4 @@
+panda_i2c.c:26:6:i2cEnable	8	static
+panda_i2c.c:29:6:i2cInit	8	static
+panda_i2c.c:39:6:i2cProcessRequest	24	static
+panda_i2c.c:79:6:i2cController	8	static

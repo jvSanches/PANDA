@@ -1,0 +1,3 @@
+spi_devices.c:14:9:getActiveD	0	static
+spi_devices.c:18:6:digipotWrite	24	static
+spi_devices.c:30:6:spiInit	8	static

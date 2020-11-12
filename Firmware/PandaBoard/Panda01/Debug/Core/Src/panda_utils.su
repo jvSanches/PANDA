@@ -1,0 +1,5 @@
+panda_utils.c:13:9:get8MSB	16	static
+panda_utils.c:16:9:get8LSB	16	static
+panda_utils.c:19:10:get16MSB	16	static
+panda_utils.c:22:10:get16LSB	16	static
+panda_utils.c:28:9:getConfigBits	24	static

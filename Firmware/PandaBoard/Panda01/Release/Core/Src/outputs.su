@@ -1,0 +1,13 @@
+outputs.c:36:6:statusLedController	8	static
+outputs.c:46:6:statusLedMode	16	static
+outputs.c:60:6:statusLedOn	8	static
+outputs.c:63:6:statusLedOff	8	static
+outputs.c:66:6:statusLedBlink	8	static
+outputs.c:96:9:getUserLedMode	0	static
+outputs.c:104:6:userLedFreq	8	static
+outputs.c:112:9:getUserLedFreq	8	static
+outputs.c:120:6:userLedController	16	static
+outputs.c:74:6:userLedMode	16	static
+outputs.c:135:6:setUserOut	8	static
+outputs.c:156:9:getUserOut	0	static
+outputs.c:174:6:outputsInit	8	static

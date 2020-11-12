@@ -1,0 +1,11 @@
+panda_serial_device.c:19:6:serial_receiveEnable	8	static
+panda_serial_device.c:24:6:serial_transmit	16	static
+panda_serial_device.c:52:6:serial_queueInit	0	static
+panda_serial_device.c:60:6:serial_init	8	static
+panda_serial_device.c:73:6:serial_addToQueue	16	static
+panda_serial_device.c:30:6:serial_ISR	8	static
+panda_serial_device.c:88:9:serial_queuedData	0	static
+panda_serial_device.c:97:9:serial_processFrame	24	static
+panda_serial_device.c:186:9:serial_getQueuedCommand	16	static
+panda_serial_device.c:204:9:serial_frameReceived	8	static
+panda_serial_device.c:208:6:serialController	8	static

@@ -1,0 +1,9 @@
+panda_modbus.c:16:9:getCoils	16	static
+panda_modbus.c:31:9:getInputs	16	static
+panda_modbus.c:43:9:writeCoil	16	static
+panda_modbus.c:62:9:modbus_readCoilStatus	24	static
+panda_modbus.c:84:9:modbus_readInputStatus	24	static
+panda_modbus.c:106:9:modbus_readHoldingRegisters	16	static
+panda_modbus.c:109:9:modbus_readIputRegisters	16	static
+panda_modbus.c:112:9:modbus_writeSingleCoil	16	static
+panda_modbus.c:124:9:modbus_writeSingleRegister	16	static
