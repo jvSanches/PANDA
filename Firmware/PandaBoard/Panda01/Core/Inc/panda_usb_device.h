@@ -30,4 +30,6 @@ uint8_t usb_getQueuedCommand(usbQueue *q);
 
 void usbController(void);
 
+
+
 #endif /* INC_PANDA_USB_DEVICE_H_ */

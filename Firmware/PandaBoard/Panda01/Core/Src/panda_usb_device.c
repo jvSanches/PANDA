@@ -13,7 +13,24 @@
 #include "acquisition.h"
 #include "spi_devices.h"
 
+uint8_t usb_active = 0;
+uint8_t getVBus(){
+	return (HAL_GPIO_ReadPin(USB_BUS_SENS_GPIO_Port, USB_BUS_SENS_Pin));
+}
 
+void setUsbActive(uint8_t value){
+	usb_active = value;
+	if (usb_active == 1){
+		statusLedOn();
+	}else if (getVBus()){
+		statusLedBlink();
+	}else{
+		statusLedOff();
+	}
+}
+uint8_t getUsbActive(){
+	return usb_active;
+}
 void usb_queueInit(usbQueue *q){
 	for(uint8_t i = 0; i < USB_QUEUE_SIZE+1; i++){
 		q->queue[i] = 0;
@@ -25,6 +42,7 @@ void usb_queueInit(usbQueue *q){
 void usb_init(){
 	usb_queueInit(&usb_Q);
 	statusLedBlink();
+	setUsbActive(0);
 }
 /*
  * usb_addToQueue(pointer to queue, pointer to message, length of message)
@@ -100,7 +118,6 @@ uint8_t usb_queueDiscard(usbQueue *q){;
 	return (USB_QUEUE_SIZE);
 }
 
-
 /*
  * Decodes a valid usb frame into device functions
  */
@@ -117,7 +134,7 @@ uint8_t usb_processFrame(uint8_t *frame){
 	uint32_t value32 = 0;
 	switch (func){
 	case 1://Hello
-		res_n = 12;
+		res_n = 13;
 		response[2] = 129;
 		response[3] = 'I';response[4] = ' ';response[5] = 'a';response[6] = 'm';response[7] = ' ';response[8] = 'a';
 		response[9] = ' ';response[10] = 'P';response[11] = 'a';response[12] = 'n';response[13] = 'd';response[14] = 'a';
@@ -126,6 +143,14 @@ uint8_t usb_processFrame(uint8_t *frame){
 		res_n = 2;
 		response[2] = 130;
 		response[3] = getConfigBits();
+		break;
+
+	case 5://Set usb active
+		value = frame[3];
+		setUsbActive(value);
+	case 6://get usb active
+		response[2] = 130;
+		response[3] = getUsbActive(value);
 		break;
 
 	case 10://Set user led mode

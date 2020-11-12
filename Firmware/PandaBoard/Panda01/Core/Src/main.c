@@ -138,13 +138,13 @@ int main(void)
   MX_TIM14_Init();
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
+  outputsInit(&htim14);
   spiInit(&hspi1);
+  acquisitionInit(&hadc, &htim2, &hdac);
+  statusLedOff();
   usb_init();
   i2cInit(&hi2c1);
-  outputsInit(&htim14);
-  acquisitionInit(&hadc, &htim2, &hdac);
   serial_init(&huart1);
-  statusLedBlink();
   can_filterConfig();
   HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
   HAL_CAN_ActivateNotification(&hcan, CAN_IT_TX_MAILBOX_EMPTY);
@@ -168,13 +168,7 @@ int main(void)
 	  i2cController();
 	  serialController();
 
-	  if (HAL_GetTick() > 1000){
-		  if (HAL_GPIO_ReadPin(USB_BUS_SENS_GPIO_Port, USB_BUS_SENS_Pin)){
-			  statusLedOff();
-		  }else{
-			  statusLedOn();
-		  }
-	  }
+
 
 //	  if (getUserIn(1)==0){
 //		  can_data[0]++;
