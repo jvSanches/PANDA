@@ -149,7 +149,8 @@ uint8_t usb_processFrame(uint8_t *frame){
 		value = frame[3];
 		setUsbActive(value);
 	case 6://get usb active
-		response[2] = 130;
+		res_n = 2;
+		response[2] = 134;
 		response[3] = getUsbActive(value);
 		break;
 
@@ -286,11 +287,11 @@ uint8_t usb_processFrame(uint8_t *frame){
 		response[4] = get8LSB(res_val);
 		break;
 
-	case 60:
+	case 60://set offset
 		value = (frame[3]<<8) + frame[4];
 		setOffset(value);
 
-	case 61:
+	case 61: //get offset
 		res_n = 3;
 		response[2] = 189;
 		res_val = getOffset();
@@ -298,7 +299,7 @@ uint8_t usb_processFrame(uint8_t *frame){
 		response[4] = get8LSB(res_val);
 		break;
 
-	case 62:
+	case 62: // auto offset
 		res_val = autoOffset();
 		res_n = 2;
 		response[2] = 190;

@@ -9,5 +9,5 @@ panda_usb_device.c:81:9:usb_peekQueue	24	static
 panda_usb_device.c:93:9:usb_GetByteFromQueue	24	static
 panda_usb_device.c:109:9:usb_queueDiscard	24	static
 panda_usb_device.c:124:9:usb_processFrame	40	static
-panda_usb_device.c:334:9:usb_getQueuedCommand	32	static
-panda_usb_device.c:353:6:usbController	8	static
+panda_usb_device.c:335:9:usb_getQueuedCommand	32	static
+panda_usb_device.c:354:6:usbController	8	static
