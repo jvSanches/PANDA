@@ -39,10 +39,15 @@ class panda:
         else:
             print("Serial port not Configured")
     def receive(self):
-        line = self.board.readline()
-        if line:
-            print("Received: ", [i for i in line])
-            return line
+        lines = []
+        
+        while self.board.in_waiting > 0:
+            lines.append(self.board.readline())
+        if lines:
+            if len(lines) > 1:
+                print("Unexpected lines received")
+            print("Received: ", [i for i in lines[-1]])
+            return lines[-1]
         else:
             return 0
 
