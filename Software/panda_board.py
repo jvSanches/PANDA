@@ -93,7 +93,7 @@ class panda:
             self.board.close()
             print("Panda Disconnected")
         
-    def led(self, state):
+    def setLedMode(self, state):
         if state == "OFF" or state == 0:
             self.send([10,0])
         elif state == "ON" or state == 1:
@@ -102,7 +102,7 @@ class panda:
             self.send([10,2])        
         return bool(self.waitAck())
 
-    def ledFreq(self, freq):
+    def setLedFreq(self, freq):
         if freq > 100 or freq < 1:
             print("Frequency out of bounds")
             return 0
@@ -110,21 +110,21 @@ class panda:
         self.send([12,freq])
         return bool(self.waitAck())
 
-    def out1(self, state):
+    def setOut1(self, state):
         if state == "OFF" or state == 0:
             self.send([14,0])
         elif state == "ON" or state == 1:
             self.send([14,1])
         return bool(self.waitAck())
 
-    def out2(self, state):
+    def setOut2(self, state):
         if state == "OFF" or state == 0:
             self.send([16,0])
         elif state == "ON" or state == 1:
             self.send([16,1])
         return bool(self.waitAck())
 
-    def ampValue(self):
+    def getAmpValue(self):
         self.send([20])
         response = self.waitAck()
         if response[2] == 148:
@@ -134,7 +134,7 @@ class panda:
             print("wrong response code")
             return None
 
-    def analog1(self):
+    def getAnalog1(self):
         self.send([21])
         response = self.waitAck()
         if response[2] == 149:
@@ -144,7 +144,7 @@ class panda:
             print("wrong response code")
             return None
             
-    def analog2(self):
+    def getAnalog2(self):
         self.send([22])
         response = self.waitAck()
         if response[2] == 150:
@@ -154,7 +154,7 @@ class panda:
             print("wrong response code")
             return None
 
-    def input1(self):
+    def getIn1(self):
         self.send([30])
         response = self.waitAck()
         if response[2] == 158:
@@ -163,7 +163,7 @@ class panda:
         else:
             print("wrong response code")
             return None
-    def input2(self):
+    def getIn2(self):
         self.send([31])
         response = self.waitAck()
         if response[2] == 159:
@@ -180,14 +180,14 @@ class panda:
             self.send([40,1])
         return bool(self.waitAck())
 
-    def setEncoder(self, count):
+    def setEncoderCount(self, count):
         if count < 0 or count > 2**32:
             print("Invalid count")
             return 0            
         self.send([42]+list(struct.unpack('4B', struct.pack('>I', count))))
         return bool(self.waitAck())
     
-    def encoderCount(self):
+    def getEncoderCount(self):
         self.send([43])
         response = self.waitAck()
         if response[2] == 171:
@@ -197,7 +197,7 @@ class panda:
             print("wrong response code")
             return None
 
-    def encoderPwm(self):
+    def getEncoderDuty(self):
         self.send([44])
         response = self.waitAck()
         if response[2] == 172:
@@ -207,7 +207,7 @@ class panda:
             print("wrong response code")
             return None
 
-    def autoOffset(self):
+    def runAutoOffset(self):
         self.send([62]) 
         return bool(self.waitAck())
 

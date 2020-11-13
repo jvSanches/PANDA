@@ -4,11 +4,12 @@ import msvcrt
 
 myPanda = panda('auto')
 input("Hit enter to start")
+print("Press esc to stop")
 
 while 1:
-    myPanda.led(1)
+    myPanda.setLed(1)
     sleep(0.25)
-    myPanda.led(0)
+    myPanda.setLed(0)
     sleep(0.25)
 
     # body of the loop ...
