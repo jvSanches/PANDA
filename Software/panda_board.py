@@ -56,6 +56,8 @@ class panda:
                     if data == ord('#'):
                         state = 1
                         frame.append(data)
+                    else:
+                        break
                 elif state == 1:
                     expected_len = data
                     state = 2
@@ -69,10 +71,14 @@ class panda:
                     if data == ord('\r'):
                         frame.append(data)
                         state = 4
+                    else:
+                        break
                 elif state == 4:
                     if data == ord('\n'):
                         frame.append(data)
                         return frame 
+                    else:
+                        break
         print("Reception fault")  
         return None             
 
