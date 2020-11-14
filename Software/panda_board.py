@@ -33,20 +33,62 @@ class panda:
     def send(self, data):
         if (self.board):
             le = len(data)
-            msg  =[35, le] + data + [13, 10]
+            msg  = [35, le] + data + [13, 10]
             self.board.write(msg)
-            print("sent: ", [i for i in msg])
+            #print("sent: ", [i for i in msg])
         else:
             print("Serial port not Configured")
+    def parseFrame(self):
+        frame = []
+        timeout = 0.1
+        start_byte = 0
+        expected_len = 0
+        actual_len = 0
+        end_of_frame = 0
+        state = 0 # 0 start / 1 check len / 2 listening / 3 eof
+        parse_start = datetime.now()
+        _timeout = 0
+        while not end_of_frame and not _timeout and self.board.in_waiting != 0:
+            _timeout = (datetime.now() - parse_start).total_seconds() > timeout
+            data = int.from_bytes(self.board.read(), 'big')
+            if data >= 0 and data <= 255:
+                if state == 0:
+                    if data == ord('#'):
+                        state = 1
+                        frame.append(data)
+                elif state == 1:
+                    expected_len = data
+                    state = 2
+                    frame.append(data)
+                elif state == 2:
+                    actual_len += 1
+                    frame.append(data)
+                    if actual_len == expected_len:
+                        state = 3
+                elif state == 3:
+                    if data == ord('\r'):
+                        frame.append(data)
+                        state = 4
+                elif state == 4:
+                    if data == ord('\n'):
+                        frame.append(data)
+                        return frame 
+        print("Reception fault")  
+        return None             
+
+
     def receive(self):
-        lines = []
-        
+        lines = []      
+
         while self.board.in_waiting > 0:
-            lines.append(self.board.readline())
+            lines.append(self.parseFrame())
         if lines:
             if len(lines) > 1:
                 print("Unexpected lines received")
-            print("Received: ", [i for i in lines[-1]])
+                input()
+            
+            #for line in lines:
+                #print("Received: ", [i for i in line])
             return lines[-1]
         else:
             return 0
@@ -55,8 +97,11 @@ class panda:
         wait_start = datetime.now()
         _timeout = 0
         while self.board.in_waiting == 0 and not _timeout:
-                _timeout = (datetime.now() - wait_start).total_seconds() > timeout
-                
+            _timeout = (datetime.now() - wait_start).total_seconds() > timeout
+            if _timeout:
+                print("Ack timeout")
+                input()
+
         msg = self.receive() 
         if msg:
             return msg
