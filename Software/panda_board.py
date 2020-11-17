@@ -134,6 +134,12 @@ class panda:
                 
             else:
                 print("No pandas available...")
+
+    def exists(self):
+        if self.board != 0:
+            return True
+        else:
+            return False
                 
     def disconnect(self):
         if self.board:
