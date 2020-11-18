@@ -22,13 +22,14 @@ import matplotlib
 matplotlib.use('WXAgg')
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigCanvas
+from matplotlib import pyplot as plt
 from time import time
 from panda_board import panda
 
 import os
 
 import numpy as np
-import pylab
+#import pylab
 
 import PandaDialogs
 from PandaDialogs import myPanda
@@ -39,21 +40,25 @@ start = time()
 
 
 class PlotFrame(wx.Frame):
-    def __init__(self, chooseUnit, parent, title):
+    def __init__(self, chooseUnit, Ks, Kf, Kt, Kp, parent, title):
 
         self.dpi = 100
         self.height = 5
         self.width = 10
 
         wx.Frame.__init__(self, parent, -1, title,
-                            pos=((self.width * self.dpi)-500, (self.height * self.dpi)), size=(800,1200))
+                            pos=((self.width * self.dpi)-500, (self.height * self.dpi)-300), size=(1000,600))
 
         self.unit = chooseUnit
+        self.Ks = Ks
+        self.Kf = Kf
+        self.Kt = Kt
+        self.Kp = Kp
 
         self.maximumData = 60
         self.maximumArray = 3000
 
-        initialValue = PandaDialogs.dataConversion(self.unit)
+        initialValue = PandaDialogs.dataConversion(self.unit, self.Ks, self.Kf, self.Kt, self.Kp)
 
         self.avgOver = 50
 
@@ -76,7 +81,8 @@ class PlotFrame(wx.Frame):
         self.redrawTimer = wx.Timer(self)
         self.updateValueTimer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.onRedrawTimer, self.redrawTimer)
-        self.Bind(wx.EVT_TIMER, self.updateValue, self.updateValueTimer)      
+        self.Bind(wx.EVT_TIMER, self.updateValue, self.updateValueTimer)   
+        self.Bind(wx.EVT_CLOSE, self.onClose, id=wx.ID_CLOSE)  
         self.redrawTimer.Start(100)
         self.updateValueTimer.Start(100)
 
@@ -88,16 +94,17 @@ class PlotFrame(wx.Frame):
 
         
     def onClose(self, event):
+        print("olar")
         self.redrawTimer.Stop()
         self.updateValueTimer.Stop()
-        self.Destroy()
+        event.Skip()
 
 
     def updateValue(self, event):
 
         myPanda.setLedMode("ON")
-        value = PandaDialogs.dataConversion(self.unit)
-        now = time()
+        value = PandaDialogs.dataConversion(self.unit, self.Ks, self.Kf, self.Kt, self.Kp)
+        now = time() - start
 
         avgSum = 0
         window = self.avgOver if self.avgOver < len(self.data) else len(self.data)
@@ -128,7 +135,7 @@ class PlotFrame(wx.Frame):
         self.fig = Figure((self.width, (self.height)), dpi=self.dpi)
 
         self.axes = self.fig.add_subplot(111)
-        self.axes.set_axis_bgcolor('black')
+        self.axes.set_facecolor('white')
         self.axes.set_title('Value and Average', size=12)
         self.axes.set_xlabel("Time (seconds)", size=10)
         if self.unit == 'strain':
@@ -138,19 +145,19 @@ class PlotFrame(wx.Frame):
         if self.unit == 'torque':
             self.axes.set_ylabel("Torque (N.m)", size=10)
 
-        pylab.setp(self.axes.get_xticklabels(), fontsize=8)
-        pylab.setp(self.axes.get_yticklabels(), fontsize=8)
+        plt.setp(self.axes.get_xticklabels(), fontsize=8)
+        plt.setp(self.axes.get_yticklabels(), fontsize=8)
 
         self.plotData = self.axes.plot(
             self.data, 
-            linewidth=1,
-            color=(1, 1, 0),
+            linewidth=2,
+            color=(1, 0, 0),
             )[0]
 
 
         self.plotAvg = self.axes.plot(
             self.avgData, 
-            linewidth=1,
+            linewidth=2,
             color=(0, 0, 1),
             )[0]
 
@@ -162,12 +169,15 @@ class PlotFrame(wx.Frame):
 
         ymin = round(min(self.data), 3) - (0.1 * abs(round(min(self.data), 3)))
         ymax = round(max(self.data), 3) + (0.1 * round(max(self.data), 3))
+        if ymin == 0 and ymax == 0:
+            ymax = self.Ks
+            ymin = -self.Ks
 
         self.axes.set_xbound(lower=xmin, upper=xmax)
         self.axes.set_ybound(lower=ymin, upper=ymax)
         
         self.axes.grid(True, color='gray')
-        pylab.setp(self.axes.get_xticklabels(), 
+        plt.setp(self.axes.get_xticklabels(), 
             visible=True)
 
         self.plotAvg.set_data(np.array(self.time), np.array(self.avgData))
@@ -187,7 +197,7 @@ class PlotFrame(wx.Frame):
         menuSave = self.menuFile.Append(-1, "&Save plot as image", "Save plot to image")
         self.Bind(wx.EVT_MENU, self.onSavePlot, menuSave)
         self.menuFile.AppendSeparator()
-        menuExit = self.menuFile.Append(-1, "E&xit\tCtrl-X", "Exit")
+        menuExit = self.menuFile.Append(-1, "E&xit\tCtrl-X", "Stop")
         self.Bind(wx.EVT_MENU, self.onClose, menuExit)
                 
         self.menuBar.Append(self.menuFile, "&File")

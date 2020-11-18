@@ -26,8 +26,7 @@ class SettingsFrame(wx.Frame):
     """
     def __init__(self, settings, parent, title):
         wx.Frame.__init__(self, parent, -1, title, 
-                        pos=(350, 250), size=(600, 520))
-        #pos=(350, 250), size=(500, 550)
+                        pos=(450, 150), size=(600, 690))
 
          # Now create the Panel to put the other controls on.
         self.panel = wx.Panel(self)
@@ -55,7 +54,7 @@ class SettingsFrame(wx.Frame):
         self.btn_showValuesGraphic = wx.CheckBox(self.panel, -1, label="Gráficos dos Valores", pos=(330, 220))
         
         self.amplifierGainText = wx.StaticText(self.panel, -1, label="Ganho do Amplificador", pos=(15, 270))
-        self.btn_amplifierGain = wx.SpinCtrl(self.panel, value='14', pos=(150, 270), min=0, max=1000)
+        self.btn_amplifierGain = wx.SpinCtrl(self.panel, value='750', pos=(150, 270), min=0, max=1000)
         
         #self.btn_calibration = wx.Button(self.panel, -1, label="Modo de Calibração", pos=(15, 280))
         
@@ -65,8 +64,18 @@ class SettingsFrame(wx.Frame):
         self.btn_strains = wx.CheckBox(self.panel, -1, label="Deformações", pos=(130, 350))
         self.btn_powers = wx.CheckBox(self.panel, -1, label="Potências", pos=(280, 350))
 
-        self.btn_saveSettings = wx.Button(self.panel, -1, label="Salvar Configurações", pos=(130, 430))
-        self.btn = wx.Button(self.panel, -1, "Cancelar", pos=(330, 430))
+        self.constantValuesText = wx.StaticText(self.panel, -1, label="Digite as constantes para cada valor:", pos=(15, 400))
+        self.strainConstantText = wx.StaticText(self.panel, -1, label="Ks", pos=(130, 430))
+        self.btn_strainConstant = wx.TextCtrl(self.panel, pos=(150, 430))
+        self.forceConstantText = wx.StaticText(self.panel, -1, label="Kf", pos=(130, 460))
+        self.btn_forceConstant = wx.TextCtrl(self.panel, pos=(150, 460))
+        self.torqueConstantText = wx.StaticText(self.panel, -1, label="Kt", pos=(130, 490))
+        self.btn_torqueConstant = wx.TextCtrl(self.panel, pos=(150, 490))
+        self.powerConstantText = wx.StaticText(self.panel, -1, label="Kp", pos=(130, 520))
+        self.btn_powerConstant = wx.TextCtrl(self.panel, pos=(150, 520))
+
+        self.btn_saveSettings = wx.Button(self.panel, -1, label="Salvar Configurações", pos=(130, 600))
+        self.btn = wx.Button(self.panel, -1, "Cancelar", pos=(330, 600))
 
         # bind the button events to handlers
         self.Bind(wx.EVT_TOGGLEBUTTON, self.ToggleControl, self.btn_controlMode)
@@ -127,6 +136,11 @@ class SettingsFrame(wx.Frame):
         self.btn_torques.SetValue(self.settings[8])
         self.btn_strains.SetValue(self.settings[9])
         self.btn_powers.SetValue(self.settings[10])
+
+        self.btn_strainConstant.SetValue(str(self.settings[11]))
+        self.btn_forceConstant.SetValue(str(self.settings[12]))
+        self.btn_torqueConstant.SetValue(str(self.settings[13]))
+        self.btn_powerConstant.SetValue(str(self.settings[14]))
  
         self.panel.Layout()
 
@@ -223,6 +237,10 @@ class SettingsFrame(wx.Frame):
         self.settings[8] = self.btn_torques.GetValue()
         self.settings[9] = self.btn_strains.GetValue()
         self.settings[10] = self.btn_powers.GetValue()
+        self.settings[11] = float(self.btn_strainConstant.GetValue())
+        self.settings[12] = float(self.btn_forceConstant.GetValue())
+        self.settings[13] = float(self.btn_torqueConstant.GetValue())
+        self.settings[14] = float(self.btn_powerConstant.GetValue())
 
         self.Close()
 

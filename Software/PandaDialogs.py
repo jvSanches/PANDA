@@ -22,7 +22,8 @@ import wx
 
 myPanda = panda('auto')
 
-def dataConversion(unit):
+def dataConversion(unit, Ks, Kf, Kt, Kp):
+    '''
     V_i = 3.3
     V_o = myPanda.getAnalog1()/228249
     R = 350
@@ -38,6 +39,13 @@ def dataConversion(unit):
     strain = dR/R*GF
     force = (E*strain*I)/(L*y)
     torque = (force*L)
+    '''
+
+    value = 3.3*((myPanda.getAnalog1()/2048) - 1)   # DAC value converted to Vout
+    strain = Ks*value
+    force = Kf*value
+    torque = Kt*value
+    power = Kp*value
 
     if unit == 'strain':
         return strain
@@ -45,6 +53,8 @@ def dataConversion(unit):
         return force
     elif unit == 'torque':
         return torque
+    elif unit == 'power':
+        return power
     else:
         print("Invalid unit!")
 
@@ -56,7 +66,7 @@ class PandaNotDetected(wx.Dialog):
                         pos=(650, 450), size=(500, 150))
 
         self.panel = wx.Panel(self)
-        self.controlNotActiveText = wx.StaticText(self.panel, -1, label="Não foi detectado um PANDA.", pos=(15,15))
+        self.controlNotActiveText = wx.StaticText(self.panel, -1, label="Não foi detectado um PANDA. Por favor, cheque se o dispositivo está conectado e foi\n reconhecido, e então reinicie o programa.", pos=(15,15))
         self.button_ok = wx.Button(self.panel, label="OK", pos=(210, 70))
         self.button_ok.Bind(wx.EVT_BUTTON, self.onOk)
 

@@ -39,26 +39,25 @@ import PandaDialogs
 from PandaDialogs import myPanda
 
 
-class MyFrame(wx.Frame):
+class MainFrame(wx.Frame):
     """
-    This is MyFrame.  It just shows a few controls on a wxPanel,
-    and has a simple menu.
+    This is the Main Frame. It's the first screen the user will see, where
+    they can decide what to do.
     """
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, -1, title,
-                          pos=(150, 150), size=(1300, 500))
-
-        #self.InitUI()
+                          pos=(350, 350), size=(800, 300))
 
         # Create the menubar
-        menuBar = wx.MenuBar()
+        #menuBar = wx.MenuBar()
 
-        # and a menu 
-        menu = wx.Menu()
+        # Create the menu
+        #menu = wx.Menu()
 
         # add an item to the menu, using \tKeyName automatically
         # creates an accelerator, the third param is some help text
         # that will show up in the statusbar
+        '''
         menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Exit this simple sample")
 
         menu.Append(wx.ID_NEW, '&New\tCtrl-N')
@@ -81,44 +80,46 @@ class MyFrame(wx.Frame):
         self.SetMenuBar(menuBar)
 
         self.CreateStatusBar()
-        
+        '''
 
         # Now create the Panel to put the other controls on.
         panel = wx.Panel(self)
 
         # and a few controls
-        text = wx.StaticText(panel, -1, "Ois! Este é o software da placa PANDA. Por favor, selecione e salve as configurações desejadas. Caso seja sua primeira vez aqui, clique no Manual do Usuário.")
+        text = wx.StaticText(panel, -1, "Ois! Este é o software da placa PANDA. Por favor, selecione e salve as configurações desejadas. \nCaso seja sua primeira vez aqui, clique no Manual do Usuário.", pos=(15,15))
         text.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         text.SetSize(text.GetBestSize())
-        btn_readme = wx.Button(panel, -1, "Manual do Usuário")
-        btn_settings = wx.Button(panel, -1, "Configurações")
-        btn_calibration = wx.Button(panel, -1, "Modo de Calibração")
-        btn_graphics = wx.Button(panel, -1, "Mostrar Gráficos")
-        btn_history = wx.Button(panel, -1, "Mostrar Histórico")
-        btn_sendControlValues = wx.Button(panel, -1, "Valores do Controle")
-        btn_exportSpreadsheet = wx.Button(panel, -1, "Exportar planilha com os valores")
+        btn_readme = wx.Button(panel, -1, "Manual do Usuário", pos=(145,90))
+        btn_settings = wx.Button(panel, -1, "Configurações", pos=(320,90))
+        btn_calibration = wx.Button(panel, -1, "Modo de Calibração", pos=(465,90))
+        btn_graphics = wx.Button(panel, -1, "Mostrar Gráficos", pos=(240,190))
+        #btn_history = wx.Button(panel, -1, "Mostrar Histórico")
+        btn_sendControlValues = wx.Button(panel, -1, "Valores do Controle", pos=(400,190))
+        #btn_exportSpreadsheet = wx.Button(panel, -1, "Exportar planilha com os valores")
 
         # bind the button events to handlers
         self.Bind(wx.EVT_BUTTON, self.OnReadmeButton, btn_readme)
         self.Bind(wx.EVT_BUTTON, self.OnSettingsButton, btn_settings)
         self.Bind(wx.EVT_BUTTON, self.OnCalibrationButton, btn_calibration)
         self.Bind(wx.EVT_BUTTON, self.onGraphicsButton, btn_graphics)
-        self.Bind(wx.EVT_BUTTON, self.onHistoryButton, btn_history)
+        #self.Bind(wx.EVT_BUTTON, self.onHistoryButton, btn_history)
         self.Bind(wx.EVT_BUTTON, self.OnSendControlButton, btn_sendControlValues)
-        self.Bind(wx.EVT_BUTTON, self.OnExportSpreadsheetButton, btn_exportSpreadsheet)
+        #self.Bind(wx.EVT_BUTTON, self.OnExportSpreadsheetButton, btn_exportSpreadsheet)
 
         # Use a sizer to layout the controls, stacked vertically and with
         # a 10 pixel border around each
+        '''
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(text, 0, wx.ALL, 10)
         sizer.Add(btn_readme, 0, wx.ALL, 10)
         sizer.Add(btn_settings, 0, wx.ALL, 10)
         sizer.Add(btn_calibration, 0, wx.ALL, 10)
         sizer.Add(btn_graphics, 0, wx.ALL, 10)
-        sizer.Add(btn_history, 0, wx.ALL, 10)
+        #sizer.Add(btn_history, 0, wx.ALL, 10)
         sizer.Add(btn_sendControlValues, 0, wx.ALL, 10)
-        sizer.Add(btn_exportSpreadsheet, 0, wx.ALL, 10)
+        #sizer.Add(btn_exportSpreadsheet, 0, wx.ALL, 10)
         panel.SetSizer(sizer)
+        '''
         panel.Layout()
 
 
@@ -128,7 +129,7 @@ class MyFrame(wx.Frame):
         self.maximumArray = 3000 
         
 
-        self.settings = ['0', False, False, False, False, False, '14', False, False, False, False]
+        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 400, 4500, 0]
         self.calibration = [True, False, False, '0', '0', '0']
 
 
@@ -145,7 +146,7 @@ class MyFrame(wx.Frame):
     def OnSettingsButton(self, evt):
         """Event handler for the button click."""
         print ("Abre o popup com as opções de configuração")
-        settings_frame = SettingsFrame(self.settings, None, "Configurações")
+        settings_frame = SettingsFrame(self.settings, parent=wx.GetTopLevelParent(self), title="Configurações")
         res = settings_frame.Show()
         if res == wx.ID_OK:
             self.settings = settings_frame.GetSettings()
@@ -155,10 +156,16 @@ class MyFrame(wx.Frame):
     def OnCalibrationButton(self, evt):
         """Event handler for the button click."""
         print ("Entra no modo de calibração")
-        cal = CalibrationFrame(self.calibration, None, "Modo de Calibração")
+        cal = CalibrationFrame(self.calibration, parent=wx.GetTopLevelParent(self), title="Modo de Calibração")
         res = cal.Show()
         if res == wx.ID_OK:
             self.calibration = cal.GetCal()
+            if self.calibration[0]:
+                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[3]/self.settings[11])) + 1))
+            if self.calibration[1]:
+                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1))
+            if self.calibration[2]:
+                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
 
         
 
@@ -169,14 +176,22 @@ class MyFrame(wx.Frame):
         if myPanda.exists():
             if self.settings[5]:
                 if self.settings[7]:
-                    plot = PlotFrame('force', None, "Gráfico da Força")
-                    plot.Show()
+                    plot = PlotFrame('force', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Força")
+                    res = plot.Show()
                 if self.settings[8]:
-                    plot = PlotFrame('torque', None, "Gráfico do Torque")
-                    plot.Show()
+                    plot = PlotFrame('torque', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico do Torque")
+                    res = plot.Show()
                 if self.settings[9]:
-                    plot = PlotFrame('strain', None, "Gráfico da Deformação")
-                    plot.Show()
+                    plot = PlotFrame('strain', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Deformação")
+                    res = plot.Show()
+                if self.settings[10]:
+                    plot = PlotFrame('power', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Potência")
+                    res = plot.Show()
+            if (not self.settings[1]) and (not self.settings[2]) and (not self.settings[3]) and (not self.settings[4]) and (not self.settings[5]):
+                noGraphicSelected_dialog = NoGraphicSelected(None, "Aviso")
+                res = noGraphicSelected_dialog.ShowModal()
+                if res == wx.ID_OK:
+                    noGraphicSelected_dialog.Destroy()
 
         else:
             pandaNotDetected_dialog = PandaDialogs.PandaNotDetected(None, "Aviso")
@@ -184,32 +199,38 @@ class MyFrame(wx.Frame):
             if res == wx.ID_OK:
                 pandaNotDetected_dialog.Destroy()
 
-
+    '''
     def onHistoryButton(self, evt):
 
         if myPanda.exists():
             if self.settings[7]:
-                history = HistoryFrame('force', None, "Histórico - Força")
+                history = HistoryFrame('force', parent=wx.GetTopLevelParent(self), title="Histórico - Força")
                 history.Show()
             if self.settings[8]:
-                history = HistoryFrame('torque', None, "Histórico - Torque")
+                history = HistoryFrame('torque', parent=wx.GetTopLevelParent(self), title="Histórico - Torque")
                 history.Show()
             if self.settings[9]:
-                history = HistoryFrame('strain', None, "Histórico - Deformação")
+                history = HistoryFrame('strain', parent=wx.GetTopLevelParent(self), title="Histórico - Deformação")
                 history.Show()
 
         else:
-            pandaNotDetected_dialog = PandaDialogs.PandaNotDetected(None, "Aviso")
+            pandaNotDetected_dialog = PandaDialogs.PandaNotDetected(parent=wx.GetTopLevelParent(self), title="Aviso")
             res = pandaNotDetected_dialog.ShowModal()
             if res == wx.ID_OK:
                 pandaNotDetected_dialog.Destroy()
-        
+    '''
             
 
     def OnSendControlButton(self, evt):
         """Event handler for the button click."""
         print ("Envia as variáveis de Controle")
 
+        notImplemented_dialog = NotYetImplemented(None, "Aviso")
+        res = notImplemented_dialog.ShowModal()
+        if res == wx.ID_OK:
+            notImplemented_dialog.Destroy()
+
+    '''
     def OnExportSpreadsheetButton(self, evt):
         """Event handler for the button click."""
         print ("Exporta uma planilha do Excel com os dados")
@@ -264,6 +285,39 @@ class MyFrame(wx.Frame):
         worksheet.write(row, 3, '=SUM(D2:D5)')
 
         workbook.close()
+    '''
+
+
+class NoGraphicSelected(wx.Dialog):
+    def __init__(self, parent, title):
+        wx.Dialog.__init__(self, parent, -1, title, 
+                        pos=(650, 450), size=(500, 150))
+
+        self.panel = wx.Panel(self)
+        self.controlNotActiveText = wx.StaticText(self.panel, -1, label="Não foi selecionado nenhum gráfico. Por favor, selecione algum nas Configurações.", pos=(15,15))
+        self.button_ok = wx.Button(self.panel, label="OK", pos=(210, 70))
+        self.button_ok.Bind(wx.EVT_BUTTON, self.onOk)
+
+        self.panel.Layout()
+
+    def onOk(self, e):
+        self.EndModal(wx.ID_OK)
+
+
+class NotYetImplemented(wx.Dialog):
+    def __init__(self, parent, title):
+        wx.Dialog.__init__(self, parent, -1, title, 
+                        pos=(650, 450), size=(500, 150))
+
+        self.panel = wx.Panel(self)
+        self.controlNotActiveText = wx.StaticText(self.panel, -1, label="Ainda será implementado!", pos=(15,15))
+        self.button_ok = wx.Button(self.panel, label="OK", pos=(210, 70))
+        self.button_ok.Bind(wx.EVT_BUTTON, self.onOk)
+
+        self.panel.Layout()
+
+    def onOk(self, e):
+        self.EndModal(wx.ID_OK)
 
 
 class MyPopupMenu(wx.Menu):
@@ -294,7 +348,7 @@ class MyPopupMenu(wx.Menu):
 
 class MyApp(wx.App):
     def OnInit(self):
-        frame = MyFrame(None, "PANDA Software")
+        frame = MainFrame(None, "PANDA Software")
         self.SetTopWindow(frame)
 
         print ("Print statements go to this stdout window by default.")
