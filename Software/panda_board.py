@@ -263,8 +263,11 @@ class panda:
             print("wrong response code")
             return None
 
-    def runAutoOffset(self):
-        self.send([62]) 
+    def runAutoOffset(self, zero_value = 2048):
+        if zero_value < 0 or zero_value  > 4095:
+            print("Invalid Offset")
+            return 0    
+        self.send([62]+list(struct.unpack('2B', struct.pack('>h', zero_value))))
         return bool(self.waitAck())
 
     def setGain(self, gain):
