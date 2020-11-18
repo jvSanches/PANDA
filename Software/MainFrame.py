@@ -46,7 +46,7 @@ class MainFrame(wx.Frame):
     """
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, -1, title,
-                          pos=(350, 350), size=(800, 300))
+                          pos=(350, 350), size=(780, 280))
 
         # Create the menubar
         #menuBar = wx.MenuBar()
@@ -89,16 +89,17 @@ class MainFrame(wx.Frame):
         text = wx.StaticText(panel, -1, "Ois! Este é o software da placa PANDA. Por favor, selecione e salve as configurações desejadas. \nCaso seja sua primeira vez aqui, clique no Manual do Usuário.", pos=(15,15))
         text.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         text.SetSize(text.GetBestSize())
-        btn_readme = wx.Button(panel, -1, "Manual do Usuário", pos=(145,90))
-        btn_settings = wx.Button(panel, -1, "Configurações", pos=(320,90))
-        btn_calibration = wx.Button(panel, -1, "Modo de Calibração", pos=(465,90))
-        btn_graphics = wx.Button(panel, -1, "Mostrar Gráficos", pos=(240,190))
+        lnk = wxhyperlink.HyperLinkCtrl(panel, -1, "Manual do Usuário", URL="https://github.com/jvSanches/PANDA/blob/master/README.md", pos=(325,150))
+        #btn_readme = wx.Button(panel, -1, title=lnk, pos=(145,90))
+        btn_settings = wx.Button(panel, -1, "Configurações", pos=(75,90))
+        btn_calibration = wx.Button(panel, -1, "Modo de Calibração", pos=(220,90))
+        btn_graphics = wx.Button(panel, -1, "Mostrar Gráficos", pos=(395,90))
         #btn_history = wx.Button(panel, -1, "Mostrar Histórico")
-        btn_sendControlValues = wx.Button(panel, -1, "Valores do Controle", pos=(400,190))
+        btn_sendControlValues = wx.Button(panel, -1, "Valores do Controle", pos=(550,90))
         #btn_exportSpreadsheet = wx.Button(panel, -1, "Exportar planilha com os valores")
 
         # bind the button events to handlers
-        self.Bind(wx.EVT_BUTTON, self.OnReadmeButton, btn_readme)
+        #self.Bind(wx.EVT_BUTTON, self.OnReadmeButton, btn_readme)
         self.Bind(wx.EVT_BUTTON, self.OnSettingsButton, btn_settings)
         self.Bind(wx.EVT_BUTTON, self.OnCalibrationButton, btn_calibration)
         self.Bind(wx.EVT_BUTTON, self.onGraphicsButton, btn_graphics)
@@ -135,17 +136,20 @@ class MainFrame(wx.Frame):
 
     def OnTimeToClose(self, evt):
         """Event handler for the button click."""
-        print ("Até logo!")
+        #print ("Até logo!")
         self.Close()
 
+    '''
     def OnReadmeButton(self, evt):
         """Event handler for the button click."""
-        print ("Envia para a página do Readme")
+        #print ("Envia para a página do Readme")
         wxhyperlink.HyperLinkCtrl.GotoURL(self, "https://github.com/jvSanches/PANDA/blob/master/README.md", ReportErrors=False, NotSameWinIfPossible=False)
+        visited = wxhyperlink.HyperLinkCtrl.SetVisited(self,Visited=False)
+    '''
 
     def OnSettingsButton(self, evt):
         """Event handler for the button click."""
-        print ("Abre o popup com as opções de configuração")
+        #print ("Abre o popup com as opções de configuração")
         settings_frame = SettingsFrame(self.settings, parent=wx.GetTopLevelParent(self), title="Configurações")
         res = settings_frame.Show()
         if res == wx.ID_OK:
@@ -155,7 +159,7 @@ class MainFrame(wx.Frame):
 
     def OnCalibrationButton(self, evt):
         """Event handler for the button click."""
-        print ("Entra no modo de calibração")
+        #print ("Entra no modo de calibração")
         cal = CalibrationFrame(self.calibration, parent=wx.GetTopLevelParent(self), title="Modo de Calibração")
         res = cal.Show()
         if res == wx.ID_OK:
@@ -171,7 +175,7 @@ class MainFrame(wx.Frame):
 
     def onGraphicsButton(self, evt):
         """Event handler for the button click."""
-        print ("Mostra o histórico de valores lidos")
+        #print ("Mostra o histórico de valores lidos")
 
         if myPanda.exists():
             if self.settings[5]:
@@ -223,7 +227,7 @@ class MainFrame(wx.Frame):
 
     def OnSendControlButton(self, evt):
         """Event handler for the button click."""
-        print ("Envia as variáveis de Controle")
+        #print ("Envia as variáveis de Controle")
 
         notImplemented_dialog = NotYetImplemented(None, "Aviso")
         res = notImplemented_dialog.ShowModal()
@@ -351,7 +355,7 @@ class MyApp(wx.App):
         frame = MainFrame(None, "PANDA Software")
         self.SetTopWindow(frame)
 
-        print ("Print statements go to this stdout window by default.")
+        #print ("Print statements go to this stdout window by default.")
 
         frame.Show(True)
         return True
