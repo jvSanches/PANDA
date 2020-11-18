@@ -94,7 +94,7 @@ class PlotFrame(wx.Frame):
 
         
     def onClose(self, event):
-        print("olar")
+        #print("olar")
         self.redrawTimer.Stop()
         self.updateValueTimer.Stop()
         event.Skip()

@@ -147,12 +147,12 @@ class SettingsFrame(wx.Frame):
 
     def OnCancel(self, evt):
         """Event handler for the button click."""
-        print ("Até logo!")
+        #print ("Até logo!")
         self.Close()
 
     def ToggleControl(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         obj = evt.GetEventObject()
         isPressed = obj.GetValue()
@@ -184,32 +184,32 @@ class SettingsFrame(wx.Frame):
 
     def OnSelectControlP(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.controlMode = 'P'
 
     def OnSelectControlPD(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.controlMode = 'PD'
 
     def OnSelectControlPI(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.controlMode = 'PI'
 
     def OnSelectControlPID(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.controlMode = 'PID'
 
         
     def OnCheckControlBoxes(self, evt):
         """Event handler for the button click."""
-        print ("Abre o popup com as opções de configuração")
+        #print ("Abre o popup com as opções de configuração")
 
         if not self.btn_controlMode.GetValue():
             controlNotActive_dialog = ControlNotActive(None, "Aviso")
@@ -224,7 +224,7 @@ class SettingsFrame(wx.Frame):
 
     def OnSaveSettingsButton(self, evt):
         """Event handler for the button click."""
-        print ("Salva as configurações escolhidas do popup")
+        #print ("Salva as configurações escolhidas do popup")
 
         self.settings[0] = self.controlMode
         self.settings[1] = self.btn_showPolesZeros.GetValue()

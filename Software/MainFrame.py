@@ -29,7 +29,6 @@
 import wx
 from wx.lib import plot as wxplot
 from wx.lib.agw import hyperlink as wxhyperlink
-import xlsxwriter
 
 from SettingsFrame import SettingsFrame
 from CalibrationFrame import CalibrationFrame

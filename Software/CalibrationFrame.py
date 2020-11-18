@@ -81,7 +81,7 @@ class CalibrationFrame(wx.Frame):
 
     def SelectStrain(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.btn_strainValue.Enable()
         self.btn_forceValue.Disable()
@@ -90,7 +90,7 @@ class CalibrationFrame(wx.Frame):
 
     def SelectForce(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.btn_strainValue.Disable()
         self.btn_forceValue.Enable()
@@ -99,7 +99,7 @@ class CalibrationFrame(wx.Frame):
 
     def SelectTorque(self, evt):
         """Event handler for the button click."""
-        print ("Ativa/Desativa o modo de Controle")
+        #print ("Ativa/Desativa o modo de Controle")
 
         self.btn_strainValue.Disable()
         self.btn_forceValue.Disable()
@@ -108,7 +108,7 @@ class CalibrationFrame(wx.Frame):
 
     def OnConfirmButton(self, evt):
         """Event handler for the button click."""
-        print ("Salva as configurações escolhidas do popup")
+        #print ("Salva as configurações escolhidas do popup")
 
         self.calibration[0] = self.btn_optStrain.GetValue()
         self.calibration[1] = self.btn_optForce.GetValue()
@@ -122,7 +122,7 @@ class CalibrationFrame(wx.Frame):
 
     def OnTimeToClose(self, evt):
         """Event handler for the button click."""
-        print ("Até logo!")
+        #print ("Até logo!")
         self.Close()
         
 
