@@ -1,9 +1,29 @@
+#----------------------------------------------------------------------
+
+# Software da PANDA
+# TCC - Engenharia Mecatrônica - Poli USP
+# Guilherme de Agrela Lopes
+# João Vitor Sanches
+#
+#
+# Arquivos:
+# MainFrame: Tela principal; chamada das outras classes
+# CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
+# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
+# PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
+# SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
+# PandaDialogs: Diálogos de erro relacionados com a PANDA
+# panda_board: Interação do software com o firmware da PANDA
+
+#----------------------------------------------------------------------
+
 import serial
 import serial.tools.list_ports
 import struct
 from time import sleep
 from datetime import datetime
 DEVICE_INQUIRE_TIMEOUT = 0.5
+
 
 def getPandaPorts():
     ports = [str(i).split()[0] for i in serial.tools.list_ports.comports()]
@@ -112,7 +132,7 @@ class panda:
         if msg:
             return msg
         else:
-            print("Panda didn't answered last call")
+            print("Panda didn't answer last call")
             return 0
 
     def __init__(self, port, id = None):
@@ -131,9 +151,16 @@ class panda:
                 self.send([10, 0])
                 self.waitAck()
                 print("Panda Connected")
+                print(available_pandas)
                 
             else:
                 print("No pandas available...")
+
+    def exists(self):
+        if self.board != 0:
+            return True
+        else:
+            return False
                 
     def disconnect(self):
         if self.board:
