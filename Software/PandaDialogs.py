@@ -26,7 +26,7 @@ myPanda = panda('auto')
 def dataConversion(unit, Ks, Kf, Kt, Kp):
     """Receives user-defined constants and the unit desired, and returns the value."""
 
-    value = 3.3*((myPanda.getAnalog1()/2048) - 1)   # DAC value converted to Vout
+    value = 3.3*((myPanda.getAmpValue()/2048) - 1)   # DAC value converted to Vout
     strain = Ks*value
     force = Kf*value
     torque = Kt*value
