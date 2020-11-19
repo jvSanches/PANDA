@@ -1,14 +1,19 @@
 <img src="https://img.shields.io/static/v1?label=PANDA&message=v1.0&color=ceccd6&style=for-the-badge&logo=python"/>
 <h1 align="center">PANDA :panda_face:</h1>
 <p align="center">Placa de Aquisição e coNdicionamento de DAdos</p>
-<p align="center">Escola Politécnica da USP</p>
-<p align="center">Engenharia Mecatrônica</p>
+<p align="center">Escola Politécnica da USP - Engenharia Mecatrônica</p>
 
 
 
 Sobre
 =================
-TCC Mecatrônica Poli-USP, Guilherme e João, Prof. Rafael, PANDA, motivo, AdP, ...
+Trabalho de Conclusão de Curso dos alunos Guilherme de Agrela Lopes e João Vitor Sanches, orientados pelo Prof. Dr. Rafael Traldi Moura, para a obtenção do diploma de Engenheiros Mecatrônicos da Escola Politécnica da USP.
+
+O foco do projeto é a PANDA (Placa de Aquisição e Condicionamento de Dados), uma placa construída primeiramente com o objetivo de realizar a aquisição de sinais provenientes de extensômetros, para a medição de deformações, forças e torques em aplicações de robótica. Contudo, ela evoluiu para mais do que isso. Ela também é uma plataforma de comunicação para diversos protocolos: I2C, SPI, CAN, USB e Modbus, além de possuir entradas analógicas e entradas e saídas digitais.
+
+Seu propósito é auxiliar em aulas e laboratórios da Escola Politécnica, sobretudo nas áreas de Engenharia Mecatrônica e Mecânica, nas mais diversas aplicações aqui citadas, pretendendo-se no futuro expandir para outras aplicações em conjunto com outras Engenharias.
+
+O projeto é apoiado e financiado pelo Fundo Patrimonial Amigos da Poli, fundo este criado com o propósito de desenvolver o potencial dos alunos da Poli, financiado projetos de politécnicos para politécnicos, auxiliando a Escola Politécnica a crescer e se desenvolver cada vez mais. Este projeto não seria possível sem o seu apoio, e por isso somos muito gratos.
 
 
 
