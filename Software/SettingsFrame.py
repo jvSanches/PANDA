@@ -5,11 +5,11 @@
 # Guilherme de Agrela Lopes
 # João Vitor Sanches
 #
+# SETTINGS FRAME
 #
 # Arquivos:
 # MainFrame: Tela principal; chamada das outras classes
 # CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
-# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
 # PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
 # SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
 # PandaDialogs: Diálogos de erro relacionados com a PANDA
@@ -21,21 +21,21 @@ import wx
 
 class SettingsFrame(wx.Frame):
     """
-    This is MyFrame.  It just shows a few controls on a wxPanel,
-    and has a simple menu.
+    This is the Settings Frame.  It shows all the options the user has:
+    generate graphics, set amplifier gain, recalibrate the board or 
+    choose Control modes.
     """
     def __init__(self, settings, parent, title):
         wx.Frame.__init__(self, parent, -1, title, 
                         pos=(450, 150), size=(600, 690))
 
-         # Now create the Panel to put the other controls on.
+        # Creates the Panel to put the other controls on
         self.panel = wx.Panel(self)
 
+        # Initializes settings array
         self.settings = settings
 
-        self.checkboxes = []
-
-        # and a few controls
+        # Controls
         self.text = wx.StaticText(self.panel, -1, label="Selecione as configurações desejadas.", pos=(15, 5))
         self.text.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         self.text.SetSize(self.text.GetBestSize())
@@ -56,8 +56,6 @@ class SettingsFrame(wx.Frame):
         self.amplifierGainText = wx.StaticText(self.panel, -1, label="Ganho do Amplificador", pos=(15, 270))
         self.btn_amplifierGain = wx.SpinCtrl(self.panel, value='750', pos=(150, 270), min=0, max=1000)
         
-        #self.btn_calibration = wx.Button(self.panel, -1, label="Modo de Calibração", pos=(15, 280))
-        
         self.valuesText = wx.StaticText(self.panel, -1, label="Mostrar Valores", pos=(15, 320))
         self.btn_forces = wx.CheckBox(self.panel, -1, label="Forças", pos=(130, 320))
         self.btn_torques = wx.CheckBox(self.panel, -1, label="Torques", pos=(280, 320))
@@ -77,7 +75,7 @@ class SettingsFrame(wx.Frame):
         self.btn_saveSettings = wx.Button(self.panel, -1, label="Salvar Configurações", pos=(130, 600))
         self.btn = wx.Button(self.panel, -1, "Cancelar", pos=(330, 600))
 
-        # bind the button events to handlers
+        # Binds the controls to handlers
         self.Bind(wx.EVT_TOGGLEBUTTON, self.ToggleControl, self.btn_controlMode)
         self.Bind(wx.EVT_RADIOBUTTON, self.OnSelectControlP, self.btn_controlP)
         self.Bind(wx.EVT_RADIOBUTTON, self.OnSelectControlPI, self.btn_controlPI)
@@ -91,6 +89,7 @@ class SettingsFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnSaveSettingsButton, self.btn_saveSettings)
         self.Bind(wx.EVT_BUTTON, self.OnCancel, self.btn)
 
+        # Prepare Frame based on settings array values
         if self.settings[0] == '0':
             self.btn_controlMode.SetValue(False)
             self.btn_controlP.Disable()
@@ -146,14 +145,11 @@ class SettingsFrame(wx.Frame):
 
 
     def OnCancel(self, evt):
-        """Event handler for the button click."""
-        #print ("Até logo!")
+        """Event handler for closing."""
         self.Close()
 
     def ToggleControl(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the Control Toggle Button."""
         obj = evt.GetEventObject()
         isPressed = obj.GetValue()
 
@@ -183,34 +179,24 @@ class SettingsFrame(wx.Frame):
 
 
     def OnSelectControlP(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the P control Radio Button."""
         self.controlMode = 'P'
 
     def OnSelectControlPD(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the PD control Radio Button."""
         self.controlMode = 'PD'
 
     def OnSelectControlPI(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the PI control Radio Button."""
         self.controlMode = 'PI'
 
     def OnSelectControlPID(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the PID control Radio Button."""
         self.controlMode = 'PID'
 
         
     def OnCheckControlBoxes(self, evt):
-        """Event handler for the button click."""
-        #print ("Abre o popup com as opções de configuração")
-
+        """Event handler for the Checkboxes."""
         if not self.btn_controlMode.GetValue():
             controlNotActive_dialog = ControlNotActive(None, "Aviso")
             res = controlNotActive_dialog.ShowModal()
@@ -223,9 +209,7 @@ class SettingsFrame(wx.Frame):
 
 
     def OnSaveSettingsButton(self, evt):
-        """Event handler for the button click."""
-        #print ("Salva as configurações escolhidas do popup")
-
+        """Event handler for the Save button."""
         self.settings[0] = self.controlMode
         self.settings[1] = self.btn_showPolesZeros.GetValue()
         self.settings[2] = self.btn_showStepAnswer.GetValue()
@@ -246,10 +230,15 @@ class SettingsFrame(wx.Frame):
 
 
     def GetSettings(self):
+        """Returns settings array when asked."""
         return self.settings
 
 
 class ControlNotActive(wx.Dialog):
+    """
+    This is a Dialog. It's opened when the user tries to select Control graphics
+    when Control mode is not active.
+    """
     def __init__(self, parent, title):
         wx.Dialog.__init__(self, parent, -1, title, 
                         pos=(650, 450), size=(500, 150))
@@ -262,4 +251,5 @@ class ControlNotActive(wx.Dialog):
         self.panel.Layout()
 
     def onOk(self, e):
+        """Event handler for the Ok button."""
         self.EndModal(wx.ID_OK)

@@ -5,11 +5,11 @@
 # Guilherme de Agrela Lopes
 # João Vitor Sanches
 #
+# MAIN FRAME
 #
 # Arquivos:
 # MainFrame: Tela principal; chamada das outras classes
 # CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
-# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
 # PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
 # SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
 # PandaDialogs: Diálogos de erro relacionados com a PANDA
@@ -21,19 +21,20 @@ import wx
 
 class CalibrationFrame(wx.Frame):
     """
-    This is MyFrame.  It just shows a few controls on a wxPanel,
-    and has a simple menu.
+    This is the Calibration Frame.  It shows the options of calibration for the user to choose.
+    The value is sent to the PANDA board and it's DAC does the calibration procedure.
     """
     def __init__(self, calibration, parent, title):
         wx.Frame.__init__(self, parent, -1, title,
                           pos=(350, 250), size=(600, 350))
 
-         # Now create the Panel to put the other controls on.
+        # Creates the Panel to put the other controls on
         self.panel = wx.Panel(self)
 
+        # Initializes calibration array
         self.calibration = calibration
 
-        # and a few controls
+        # Controls
         self.text = wx.StaticText(self.panel, -1, label="Digite o valor de deformação, força ou torque aplicado.", pos=(15, 15))
         self.text.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         self.text.SetSize(self.text.GetBestSize())
@@ -49,14 +50,14 @@ class CalibrationFrame(wx.Frame):
         self.btn_confirmChoices = wx.Button(self.panel, -1, label="Aplicar", pos=(140, 200))
         self.btn = wx.Button(self.panel, -1, "Cancelar", pos=(340, 200))
 
-        # bind the button events to handlers
+        # Binds the controls to handlers
         self.Bind(wx.EVT_BUTTON, self.OnTimeToClose, self.btn)
         self.Bind(wx.EVT_RADIOBUTTON, self.SelectStrain, self.btn_optStrain)
         self.Bind(wx.EVT_RADIOBUTTON, self.SelectForce, self.btn_optForce)
         self.Bind(wx.EVT_RADIOBUTTON, self.SelectTorque, self.btn_optTorque)
         self.Bind(wx.EVT_BUTTON, self.OnConfirmButton, self.btn_confirmChoices)
 
-
+        # Prepares the Frame, based on calibration array values
         if self.calibration[0]:
             self.btn_strainValue.Enable()
         else:
@@ -80,36 +81,29 @@ class CalibrationFrame(wx.Frame):
 
 
     def SelectStrain(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the Strain Radio Button."""
         self.btn_strainValue.Enable()
         self.btn_forceValue.Disable()
         self.btn_torqueValue.Disable()
 
 
     def SelectForce(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the Force Radio Button."""
         self.btn_strainValue.Disable()
         self.btn_forceValue.Enable()
         self.btn_torqueValue.Disable()
 
 
     def SelectTorque(self, evt):
-        """Event handler for the button click."""
-        #print ("Ativa/Desativa o modo de Controle")
-
+        """Event handler for the Torque Radio Button."""
         self.btn_strainValue.Disable()
         self.btn_forceValue.Disable()
         self.btn_torqueValue.Enable()
 
 
     def OnConfirmButton(self, evt):
-        """Event handler for the button click."""
-        #print ("Salva as configurações escolhidas do popup")
-
+        """Event handler for the Confirm button."""
+        # Attributes new values to calibration array
         self.calibration[0] = self.btn_optStrain.GetValue()
         self.calibration[1] = self.btn_optForce.GetValue()
         self.calibration[2] = self.btn_optTorque.GetValue()
@@ -121,10 +115,10 @@ class CalibrationFrame(wx.Frame):
 
 
     def OnTimeToClose(self, evt):
-        """Event handler for the button click."""
-        #print ("Até logo!")
+        """Event handler for closing."""
         self.Close()
         
 
     def GetCal(self):
+        """Returns calibration array when asked."""
         return self.calibration

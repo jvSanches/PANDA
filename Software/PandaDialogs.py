@@ -5,11 +5,11 @@
 # Guilherme de Agrela Lopes
 # João Vitor Sanches
 #
+# PANDA DIALOGS
 #
 # Arquivos:
 # MainFrame: Tela principal; chamada das outras classes
 # CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
-# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
 # PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
 # SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
 # PandaDialogs: Diálogos de erro relacionados com a PANDA
@@ -20,26 +20,11 @@
 from panda_board import panda
 import wx
 
+# Connects to PANDA
 myPanda = panda('auto')
 
 def dataConversion(unit, Ks, Kf, Kt, Kp):
-    '''
-    V_i = 3.3
-    V_o = myPanda.getAnalog1()/228249
-    R = 350
-    E = 70000000000
-    GF = 2
-    m = 0.1
-    radius = 0.01
-    I = m*radius*radius/2
-    y = 0.001
-    L = 0.1
-    dV = V_o/V_i
-    dR = (4*R*dV)/(V_i-2*dV)
-    strain = dR/R*GF
-    force = (E*strain*I)/(L*y)
-    torque = (force*L)
-    '''
+    """Receives user-defined constants and the unit desired, and returns the value."""
 
     value = 3.3*((myPanda.getAnalog1()/2048) - 1)   # DAC value converted to Vout
     strain = Ks*value
@@ -61,6 +46,10 @@ def dataConversion(unit, Ks, Kf, Kt, Kp):
 
 
 class PandaNotDetected(wx.Dialog):
+    """
+    This is a Dialog. It's opened when a PANDA board has not
+    been detected.
+    """
     def __init__(self, parent, title):
         wx.Dialog.__init__(self, parent, -1, title, 
                         pos=(650, 450), size=(500, 150))
@@ -73,4 +62,5 @@ class PandaNotDetected(wx.Dialog):
         self.panel.Layout()
 
     def onOk(self, e):
+        """Event handler for the Ok button."""
         self.EndModal(wx.ID_OK)

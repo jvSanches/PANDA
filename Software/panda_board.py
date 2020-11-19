@@ -5,11 +5,11 @@
 # Guilherme de Agrela Lopes
 # João Vitor Sanches
 #
+# PANDA BOARD INTERFACE
 #
 # Arquivos:
 # MainFrame: Tela principal; chamada das outras classes
 # CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
-# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
 # PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
 # SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
 # PandaDialogs: Diálogos de erro relacionados com a PANDA
@@ -303,4 +303,3 @@ class panda:
             return 0    
         self.send([54]+list(struct.unpack('2B', struct.pack('>h', gain))))
         return bool(self.waitAck())
-        

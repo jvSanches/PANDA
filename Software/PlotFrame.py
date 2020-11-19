@@ -5,11 +5,11 @@
 # Guilherme de Agrela Lopes
 # João Vitor Sanches
 #
+# PLOT FRAME
 #
 # Arquivos:
 # MainFrame: Tela principal; chamada das outras classes
 # CalibrationFrame: Tela para realizar a calibração da placa; criada ao clicar no botão 'Modo de Calibração' da tela principal
-# HistoryFrame: Tela para selecionar o histórico das leituras da placa e geração de arquivo .csv do período selecionado; criada ao clicar no botão 'Mostrar Histórico'
 # PlotFrame: Telas com os gráficos gerados a partir das seleções na tela de Configuração; criadas ao clicar no botão 'Mostrar Gráficos'
 # SettingsFrame: Tela para escolher as configurações desejadas do programa; criada ao clicar no botão 'Configurações'
 # PandaDialogs: Diálogos de erro relacionados com a PANDA
@@ -18,18 +18,20 @@
 #----------------------------------------------------------------------
 
 import wx
+
 import matplotlib
 matplotlib.use('WXAgg')
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigCanvas
 from matplotlib import pyplot as plt
+
 from time import time
+
 from panda_board import panda
 
 import os
 
 import numpy as np
-#import pylab
 
 import PandaDialogs
 from PandaDialogs import myPanda
@@ -40,8 +42,12 @@ start = time()
 
 
 class PlotFrame(wx.Frame):
+    """
+    This is the Plot Frame.  It plots in real time the graphics that the user has chosen 
+    in the Settings Frame.  The user has the option to save the plot as an image or
+    save the data in .csv format.
+    """
     def __init__(self, chooseUnit, Ks, Kf, Kt, Kp, parent, title):
-
         self.dpi = 100
         self.height = 5
         self.width = 10
@@ -49,15 +55,18 @@ class PlotFrame(wx.Frame):
         wx.Frame.__init__(self, parent, -1, title,
                             pos=((self.width * self.dpi)-500, (self.height * self.dpi)-300), size=(1000,600))
 
+        # Initializes unit and constants
         self.unit = chooseUnit
         self.Ks = Ks
         self.Kf = Kf
         self.Kt = Kt
         self.Kp = Kp
 
+        # Defines maximum sizes
         self.maximumData = 60
         self.maximumArray = 3000
 
+        # Gets initial value from function in PandaDialogs
         initialValue = PandaDialogs.dataConversion(self.unit, self.Ks, self.Kf, self.Kt, self.Kp)
 
         self.avgOver = 50
@@ -78,6 +87,7 @@ class PlotFrame(wx.Frame):
 
         self.canvas = FigCanvas(self.panel, -1, self.fig)
 
+        # Creates timers
         self.redrawTimer = wx.Timer(self)
         self.updateValueTimer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.onRedrawTimer, self.redrawTimer)
@@ -94,14 +104,14 @@ class PlotFrame(wx.Frame):
 
         
     def onClose(self, event):
-        #print("olar")
+        """Event handler for closing."""
         self.redrawTimer.Stop()
         self.updateValueTimer.Stop()
         event.Skip()
 
 
     def updateValue(self, event):
-
+        """Gets current value and updates it in the arrays. Also blinks PANDA led."""
         myPanda.setLedMode("ON")
         value = PandaDialogs.dataConversion(self.unit, self.Ks, self.Kf, self.Kt, self.Kp)
         now = time() - start
@@ -132,6 +142,7 @@ class PlotFrame(wx.Frame):
         myPanda.setLedMode("OFF")
 
     def initPlot(self):
+        """Initializes plot."""
         self.fig = Figure((self.width, (self.height)), dpi=self.dpi)
 
         self.axes = self.fig.add_subplot(111)
@@ -162,7 +173,7 @@ class PlotFrame(wx.Frame):
             )[0]
 
     def drawPlot(self):
-
+        """Draws plot when called."""
         gap = self.maximumData
         xmax = self.totalTime if self.totalTime > gap else gap      
         xmin = xmax - gap
@@ -186,9 +197,11 @@ class PlotFrame(wx.Frame):
         self.canvas.draw()
 
     def onRedrawTimer(self, event):      
+        """Keeps calling drawPlot whenever the timer event is triggered."""
         self.drawPlot()
 
     def createMenu(self):
+        """Creates menu where the user can choose to save an image or csv."""
         self.menuBar = wx.MenuBar()
         
         self.menuFile = wx.Menu()
@@ -204,6 +217,7 @@ class PlotFrame(wx.Frame):
         self.SetMenuBar(self.menuBar)
 
     def onSavePlot(self, event):
+        """Saves the plot as an image."""
         fileChoices = "PNG (*.png)|*.png"
         
         dlg = wx.FileDialog(
@@ -219,6 +233,7 @@ class PlotFrame(wx.Frame):
             self.canvas.print_figure(path, dpi=self.dpi)
 
     def onSaveCSV(self, event):
+        """Saves the data as a csv file."""
         fileChoices = "CSV (*.csv)|*.csv"
         
         dlg = wx.FileDialog(
