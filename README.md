@@ -1,8 +1,9 @@
-<img src="https://img.shields.io/static/v1?label=PANDA&message=v1.0&color=ceccd6&style=for-the-badge&logo=python"/>
-<h1 align="center">PANDA :panda_face:</h1>
+<img src="https://img.shields.io/static/v1?label=PANDA&message=v1.0&color=ceccd6&style=for-the-badge&logo=python"/> 
+
+<h1 align="center">PANDA :panda_face: </h1>
 <p align="center">Placa de Aquisição e coNdicionamento de DAdos</p>
 <p align="center">Escola Politécnica da USP - Engenharia Mecatrônica</p>
-
+<img src="https://www.amigosdapoli.com.br/static/logo-de0ca5685bde306c6345b2805c4685c5.png" width="300" align="right">
 
 
 Sobre
@@ -14,7 +15,7 @@ O foco do projeto é a PANDA (Placa de Aquisição e Condicionamento de Dados), 
 Seu propósito é auxiliar em aulas e laboratórios da Escola Politécnica, sobretudo nas áreas de Engenharia Mecatrônica e Mecânica, nas mais diversas aplicações aqui citadas, pretendendo-se no futuro expandir para outras aplicações em conjunto com outras Engenharias.
 
 O projeto é apoiado e financiado pelo Fundo Patrimonial Amigos da Poli, fundo este criado com o propósito de desenvolver o potencial dos alunos da Poli, financiado projetos de politécnicos para politécnicos, auxiliando a Escola a crescer e se desenvolver cada vez mais. Este projeto não seria possível sem o seu apoio, e por isso somos muito gratos.
-![alt text](https://www.amigosdapoli.com.br/static/logo-de0ca5685bde306c6345b2805c4685c5.png| width=100)
+
 
 
 
