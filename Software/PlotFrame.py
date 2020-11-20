@@ -205,15 +205,15 @@ class PlotFrame(wx.Frame):
         self.menuBar = wx.MenuBar()
         
         self.menuFile = wx.Menu()
-        menuSaveCSV = self.menuFile.Append(-1, "&Save plot as CSV", "Save data to csv")
+        menuSaveCSV = self.menuFile.Append(-1, "&Salvar dados em .csv", "Save data to csv")
         self.Bind(wx.EVT_MENU, self.onSaveCSV, menuSaveCSV)
-        menuSave = self.menuFile.Append(-1, "&Save plot as image", "Save plot to image")
+        menuSave = self.menuFile.Append(-1, "&Salvar imagem", "Save plot to image")
         self.Bind(wx.EVT_MENU, self.onSavePlot, menuSave)
         self.menuFile.AppendSeparator()
-        menuExit = self.menuFile.Append(-1, "E&xit\tCtrl-X", "Stop")
+        menuExit = self.menuFile.Append(-1, "Parar aquisição\tCtrl-X", "Stop")
         self.Bind(wx.EVT_MENU, self.onClose, menuExit)
                 
-        self.menuBar.Append(self.menuFile, "&File")
+        self.menuBar.Append(self.menuFile, "&Arquivo")
         self.SetMenuBar(self.menuBar)
 
     def onSavePlot(self, event):
@@ -248,7 +248,13 @@ class PlotFrame(wx.Frame):
             path = dlg.GetPath()
             outFile = open(path, 'w')
 
-            outFile.write("Time,Temp\n")
+        if self.unit == 'strain':
+            outFile.write("Time,Strain\n")
+        if self.unit == 'force':
+            outFile.write("Time,Force\n")
+        if self.unit == 'torque':
+            outFile.write("Time,Torque\n")
+
             for i in range(len(self.data)):
                 outFile.write(str(self.fileTime[i]) + ",")
                 outFile.write(str(self.fileValue[i]) + "\n")

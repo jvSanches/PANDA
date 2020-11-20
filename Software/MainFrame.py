@@ -59,7 +59,7 @@ class MainFrame(wx.Frame):
         panel.Layout()
         
         # Initial value of arrays
-        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 400, 4500, 0]
+        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 4000, 45, 0]
         self.calibration = [True, False, False, '0', '0', '0']
 
 
