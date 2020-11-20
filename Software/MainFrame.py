@@ -65,6 +65,7 @@ class MainFrame(wx.Frame):
 
     def OnTimeToClose(self, evt):
         """Event handler for closing."""
+        myPanda.disconnect()
         self.Close()
 
 

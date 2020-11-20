@@ -174,6 +174,8 @@ class PlotFrame(wx.Frame):
             color=(0, 0, 1),
             )[0]
 
+        self.Bind(wx.EVT_CLOSE, self.onClose)
+
     def drawPlot(self):
         """Draws plot when called."""
         gap = self.maximumData
