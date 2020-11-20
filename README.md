@@ -71,4 +71,15 @@ Pronto! O executável gerado estará na pasta dist, ainda no diretório onde est
 
 ### Configurações
 
-Na janela de Configurações, o usuário possui algumas opções. O primeiro botão de cima para baixo ativa e desativa o modo de Controle. Uma vez ativado, é possível escolher entre controle P, PD, PI ou PID.
+* Na janela de Configurações, você possui algumas opções. O primeiro botão de cima para baixo ativa/desativa o modo de Controle. Uma vez ativado, é possível escolher entre controle P, PD, PI ou PID;
+
+* O segundo bloco é onde você pode selecionar os gráficos que quer gerar. Atenção: só é possível selecionar gráficos de Controle se ele estiver ativo. 'Gráficos dos Valores' refere-se aos valores selecionados mais para baixo;
+
+* Em seguida, preencha a lacuna com o valor do ganho desejado para o amplificador. Pode ser inserido um valor de 1 a 1000; 
+
+* No bloco 'Mostrar Valores', selecione de quais valores você quer que sejam gerados os dados e gráficos;
+
+* Essa é a parte mais complicada. É necessário que você calcule a constante multiplicadora para cada valor desejado. O valor fornecido pela placa é o da tensão de saída da Ponte de Wheatstone, e para convertê-lo é necessário realizar algumas contas, que dependem de medidas da sua aplicação.
+
+Para o cálculo de Ks (constante de deformação): <img src="http://www.sciweavers.org/upload/Tex2Img_1605903039/render.png" width="150">, onde R é a resistência do extensômetro, GF é o Gage Factor dele, 
+
