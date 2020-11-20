@@ -63,7 +63,7 @@ class PlotFrame(wx.Frame):
         self.Kp = Kp
 
         # Defines maximum sizes
-        self.maximumData = 60
+        self.maximumData = 5
         self.maximumArray = 3000
 
         # Gets initial value from function in PandaDialogs
@@ -79,6 +79,7 @@ class PlotFrame(wx.Frame):
 
         self.fileTime = [0]
         self.fileValue = [initialValue]
+        self.fileAvg = [initialValue]
 
         self.panel = wx.Panel(self, -1)
 
@@ -93,8 +94,8 @@ class PlotFrame(wx.Frame):
         self.Bind(wx.EVT_TIMER, self.onRedrawTimer, self.redrawTimer)
         self.Bind(wx.EVT_TIMER, self.updateValue, self.updateValueTimer)   
         self.Bind(wx.EVT_CLOSE, self.onClose, id=wx.ID_CLOSE)  
-        self.redrawTimer.Start(100)
-        self.updateValueTimer.Start(100)
+        self.redrawTimer.Start(0.1)
+        self.updateValueTimer.Start(0.1)
 
         self.graphBox = wx.BoxSizer(wx.VERTICAL)
         self.graphBox.Add(self.canvas, 1, flag=wx.LEFT | wx.TOP | wx.GROW) 
@@ -138,6 +139,7 @@ class PlotFrame(wx.Frame):
 
         self.fileTime.append(float(now))
         self.fileValue.append(float(value))
+        self.fileAvg.append(float(avgSum))
 
         myPanda.setLedMode("OFF")
 
@@ -178,11 +180,23 @@ class PlotFrame(wx.Frame):
         xmax = self.totalTime if self.totalTime > gap else gap      
         xmin = xmax - gap
 
-        ymin = round(min(self.data), 3) - (0.1 * abs(round(min(self.data), 3)))
-        ymax = round(max(self.data), 3) + (0.1 * round(max(self.data), 3))
-        if (ymin == 0 and ymax == 0) or ymin == ymax:
-            ymax = self.Ks
-            ymin = -self.Ks
+        if self.unit == 'strain':
+            ymin = -self.Ks*5
+            ymax = self.Ks*5
+        if self.unit == 'force':
+            ymin = -self.Kf*5
+            ymax = self.Kf*5
+        if self.unit == 'torque':
+            ymin = -self.Kt*5
+            ymax = self.Kt*5
+        if self.unit == 'power':
+            ymin = -self.Kp*5
+            ymax = self.Kp*5
+        #ymin = round(min(self.data), 3) - (1 * abs(round(min(self.data), 3)))
+        #ymax = round(max(self.data), 3) + (1 * round(max(self.data), 3))
+        #if (ymin == 0 and ymax == 0) or ymin == ymax:
+            #ymax = self.Ks*10
+            #ymin = -self.Ks*10
 
         self.axes.set_xbound(lower=xmin, upper=xmax)
         self.axes.set_ybound(lower=ymin, upper=ymax)
@@ -248,14 +262,17 @@ class PlotFrame(wx.Frame):
             path = dlg.GetPath()
             outFile = open(path, 'w')
 
-        if self.unit == 'strain':
-            outFile.write("Time,Strain\n")
-        if self.unit == 'force':
-            outFile.write("Time,Force\n")
-        if self.unit == 'torque':
-            outFile.write("Time,Torque\n")
+            if self.unit == 'strain':
+                outFile.write("Time,Strain,Avg\n")
+            if self.unit == 'force':
+                outFile.write("Time,Force,Avg\n")
+            if self.unit == 'torque':
+                outFile.write("Time,Torque,Avg\n")
+            if self.unit == 'power':
+                outFile.write("Time,Power,Avg\n")
 
             for i in range(len(self.data)):
                 outFile.write(str(self.fileTime[i]) + ",")
-                outFile.write(str(self.fileValue[i]) + "\n")
+                outFile.write(str(self.fileValue[i]) + ",")
+                outFile.write(str(self.fileAvg[i]) + "\n")
             outFile.close()
