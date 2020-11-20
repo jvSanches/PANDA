@@ -180,7 +180,7 @@ class PlotFrame(wx.Frame):
 
         ymin = round(min(self.data), 3) - (0.1 * abs(round(min(self.data), 3)))
         ymax = round(max(self.data), 3) + (0.1 * round(max(self.data), 3))
-        if ymin == 0 and ymax == 0:
+        if (ymin == 0 and ymax == 0) or ymin == ymax:
             ymax = self.Ks
             ymin = -self.Ks
 
