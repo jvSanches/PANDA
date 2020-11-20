@@ -126,7 +126,6 @@ class panda:
             _timeout = (datetime.now() - wait_start).total_seconds() > timeout
             if _timeout:
                 print("Ack timeout")
-                input()
 
         msg = self.receive() 
         if msg:
@@ -295,11 +294,13 @@ class panda:
             print("Invalid Offset")
             return 0    
         self.send([62]+list(struct.unpack('2B', struct.pack('>h', zero_value))))
-        return bool(self.waitAck())
+        return bool(self.waitAck(2))#Reduzir timeout depois
 
     def setGain(self, gain):
         if gain < 1:
             print("Invalid gain")
             return 0    
         self.send([54]+list(struct.unpack('2B', struct.pack('>h', gain))))
-        return bool(self.waitAck())
+        ack = self.waitAck(1) #Reduzir timeout depois
+        print((ack[3]<<8) + (ack[4]))
+        return bool(ack)

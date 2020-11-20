@@ -51,16 +51,24 @@ Tabela de conteúdos
 
 
 
-### Download
+Download
+=================
 
 O download do executável encontra-se aqui: [PANDA Software](https://mega.nz/file/uoYHTCrZ#ABBqe71Tc6OB-UX57K_Z6Jc-_zFcgVjPxbuWSQznxSI).
 
 
 
-### Como Usar
-
-...
+Como Usar
+=================
 
 ### Pré-Requisitos
 
-...
+O único pré-requisito necessário para usar o software da PANDA é ter o sistema operacional Windows. Se esse não for o seu caso, será necessário que você tenha no seu sistema operacional algum ambiente que rode Python, de preferência usando Anaconda. Em seguida, baixe para seu computador os arquivos em Python da pasta 'Software'. Instale as bibliotecas wx, matplotlib, time, os, numpy e pyinstaller. Na linha de comando, no diretório dos arquivos que você baixou, digite a seguinte linha:
+```bash
+pyinstaller --onefile MainFrame.py --noconsole
+```
+Pronto! O executável gerado estará na pasta dist, ainda no diretório onde estão os arquivos que você baixou.
+
+### Configurações
+
+Na janela de Configurações, o usuário possui algumas opções. O primeiro botão de cima para baixo ativa e desativa o modo de Controle. Uma vez ativado, é possível escolher entre controle P, PD, PI ou PID.
