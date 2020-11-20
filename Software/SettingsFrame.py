@@ -86,7 +86,7 @@ class SettingsFrame(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.OnCheckControlBoxes, self.btn_showStepAnswer)
         self.Bind(wx.EVT_CHECKBOX, self.OnCheckControlBoxes, self.btn_showRampAnswer)
 
-        self.Bind(wx.EVT_BUTTON, self.OnSaveSettingsButton, self.btn_saveSettings)
+        self.Bind(wx.EVT_BUTTON, self.OnSaveSettingsButton, self.btn_saveSettings, id=wx.ID_OK)
         self.Bind(wx.EVT_BUTTON, self.OnCancel, self.btn)
 
         # Prepare Frame based on settings array values
@@ -146,6 +146,7 @@ class SettingsFrame(wx.Frame):
 
     def OnCancel(self, evt):
         """Event handler for closing."""
+        self.settings[15] = wx.ID_CANCEL
         self.Close()
 
     def ToggleControl(self, evt):
@@ -225,6 +226,7 @@ class SettingsFrame(wx.Frame):
         self.settings[12] = float(self.btn_forceConstant.GetValue())
         self.settings[13] = float(self.btn_torqueConstant.GetValue())
         self.settings[14] = float(self.btn_powerConstant.GetValue())
+        self.settings[15] = wx.ID_OK
 
         self.Close()
 

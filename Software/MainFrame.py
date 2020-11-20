@@ -59,8 +59,8 @@ class MainFrame(wx.Frame):
         panel.Layout()
         
         # Initial value of arrays
-        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 4000, 45, 0]
-        self.calibration = [True, False, False, '0', '0', '0']
+        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 4000, 45, 0, 0]
+        self.calibration = [True, False, False, '0', '0', '0', 0]
 
 
     def OnTimeToClose(self, evt):
@@ -71,30 +71,33 @@ class MainFrame(wx.Frame):
     def OnSettingsButton(self, evt):
         """Event handler for the Settings button."""
         settings_frame = SettingsFrame(self.settings, parent=wx.GetTopLevelParent(self), title="Configurações")
-        res = settings_frame.Show()
-        if res == wx.ID_OK:
-            self.settings = settings_frame.GetSettings()
-            myPanda.setGain(self.settings[6])
+        settings_frame.Show()
 
 
     def OnCalibrationButton(self, evt):
         """Event handler for the Calibration button."""
         cal = CalibrationFrame(self.calibration, parent=wx.GetTopLevelParent(self), title="Modo de Calibração")
         res = cal.Show()
-        if res == wx.ID_OK:
-            self.calibration = cal.GetCal()
-            if self.calibration[0]:
-                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[3]/self.settings[11])) + 1))
-            if self.calibration[1]:
-                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1))
-            if self.calibration[2]:
-                myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
-
-        
+            
 
     def onGraphicsButton(self, evt):
         """Event handler for the Graphics button."""
         if myPanda.exists():
+            if self.settings[1] or self.settings[2] or self.settings[3] or self.settings[4] or self.settings[5]:
+                if self.settings[15] == wx.ID_OK:
+                    myPanda.setGain(self.settings[6])
+                    self.settings[15] = 0
+
+                '''
+                if self.calibration[6] == wx.ID_OK:
+                    if self.calibration[0]:
+                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[3]/self.settings[11])) + 1))
+                    if self.calibration[1]:
+                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1))
+                    if self.calibration[2]:
+                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
+                '''
+
             if self.settings[5]:
                 if self.settings[7]:
                     plot = PlotFrame('force', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Força")

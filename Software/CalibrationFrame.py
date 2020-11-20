@@ -110,6 +110,7 @@ class CalibrationFrame(wx.Frame):
         self.calibration[3] = self.btn_strainValue.GetValue()
         self.calibration[4] = self.btn_forceValue.GetValue()
         self.calibration[5] = self.btn_torqueValue.GetValue()
+        self.calibration[6] = wx.ID_OK
 
         self.Close()
 
