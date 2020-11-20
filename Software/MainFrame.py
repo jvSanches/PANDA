@@ -88,15 +88,15 @@ class MainFrame(wx.Frame):
                     myPanda.setGain(self.settings[6])
                     self.settings[15] = 0
 
-                '''
+                
                 if self.calibration[6] == wx.ID_OK:
                     if self.calibration[0]:
-                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[3]/self.settings[11])) + 1))
+                        myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[3]/self.settings[11])) + 1)))
                     if self.calibration[1]:
-                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1))
+                        myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1)))
                     if self.calibration[2]:
-                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
-                '''
+                        myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1)))
+                
 
             if self.settings[5]:
                 if self.settings[7]:
