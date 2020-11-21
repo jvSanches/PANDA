@@ -119,7 +119,7 @@ Em projetos de equipamentos que exigem motores trifásicos, sobretudo para ferra
 
 ### Caracterização de Motores
 
-No âmbito da Robótica, o estudo de motores adequados para as aplicações é de grande relevância. Aproveitamos para dar um alô para a [Equipe ThundeRatz de Robótica](thunderatz.org)! Em grupos de extensão como esse, fazer a caracterização de motores é importante para verificar informações deles que podem não estar disponíveis tão facilmente. Também é interessante o seu uso para a verificação de motores que foram revitalizados. 
+No âmbito da Robótica, o estudo de motores adequados para as aplicações é de grande relevância. Aproveitamos para dar um alô para a [Equipe ThundeRatz de Robótica](https://thunderatz.org/)! Em grupos de extensão como esse, fazer a caracterização de motores é importante para verificar informações deles que podem não estar disponíveis tão facilmente. Também é interessante o seu uso para a verificação de motores que foram revitalizados. 
 
 ### Leitura de Termistores
 
@@ -127,11 +127,11 @@ Para a área de Térmicas a PANDA também possui função! Em aplicações utili
 
 ### Controle de Módulo Motorizado
 
-...
+Nas matérias relacionadas com Controle, muitas vezes pode ser difícil enxergar como um sistema de equações pode fazer um sistema motorizado funcionar da forma que queremos. Assim, a PANDA também pode auxiliar nesses Laboratórios, controlando alguns módulos. É possível escolher dentre 4 tipos de controle, além de poder gerar gráficos de pólos e zeros e respostas a degraus e rampas.
 
 ### Interface com Arduino
 
-...
+Por fim <s>por enquanto</s>, a última aplicação é mais geral, mas que também abre portas para muitas oportunidades. A PANDA pode se comunicar com Arduinos! Dessa forma, essa placa que é tanto utilizada mundo afora pode construir projetos que incluam também a nossa placa. Pense nas possibilidades de modularização e escalabilidade!
 
 
       
