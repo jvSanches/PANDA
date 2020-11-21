@@ -29,15 +29,15 @@ def dataConversion(unit, Ks, Kf, Kt, Kp):
     value = 3.3*((myPanda.getAmpValue()/2048) - 1)   # DAC value converted to Vout
     strain = Ks*value
     force = Kf*value
-    torque = Kt*value
+    stress = Kt*value
     power = Kp*value
 
     if unit == 'strain':
         return strain
-    elif unit == 'force':
+    elif unit == 'force/torque':
         return force
-    elif unit == 'torque':
-        return torque
+    elif unit == 'stress':
+        return stress
     elif unit == 'power':
         return power
     else:

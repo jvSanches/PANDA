@@ -40,12 +40,12 @@ class CalibrationFrame(wx.Frame):
         self.text.SetSize(self.text.GetBestSize())
 
         self.btn_optStrain = wx.RadioButton(self.panel, -1, label="Deformação", style=wx.RB_GROUP, pos=(15, 95))
-        self.btn_optForce = wx.RadioButton(self.panel, -1, label="Força", pos=(210, 95))
-        self.btn_optTorque = wx.RadioButton(self.panel, -1, label="Torque", pos=(375, 95))
+        self.btn_optForce = wx.RadioButton(self.panel, -1, label="F/T", pos=(210, 95))
+        self.btn_optStress = wx.RadioButton(self.panel, -1, label="Tensão", pos=(375, 95))
         
         self.btn_strainValue = wx.SpinCtrl(self.panel, value='0', pos=(110, 90), min=0, max=1000)
         self.btn_forceValue = wx.SpinCtrl(self.panel, value='0', pos=(270, 90), min=0, max=1000)
-        self.btn_torqueValue = wx.SpinCtrl(self.panel, value='0', pos=(440, 90), min=0, max=1000)
+        self.btn_stressValue = wx.SpinCtrl(self.panel, value='0', pos=(440, 90), min=0, max=1000)
         
         self.btn_confirmChoices = wx.Button(self.panel, -1, label="Aplicar", pos=(140, 200))
         self.btn = wx.Button(self.panel, -1, "Cancelar", pos=(340, 200))
@@ -54,7 +54,7 @@ class CalibrationFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnTimeToClose, self.btn)
         self.Bind(wx.EVT_RADIOBUTTON, self.SelectStrain, self.btn_optStrain)
         self.Bind(wx.EVT_RADIOBUTTON, self.SelectForce, self.btn_optForce)
-        self.Bind(wx.EVT_RADIOBUTTON, self.SelectTorque, self.btn_optTorque)
+        self.Bind(wx.EVT_RADIOBUTTON, self.SelectStress, self.btn_optStress)
         self.Bind(wx.EVT_BUTTON, self.OnConfirmButton, self.btn_confirmChoices)
 
         # Prepares the Frame, based on calibration array values
@@ -67,15 +67,15 @@ class CalibrationFrame(wx.Frame):
         else:
             self.btn_forceValue.Disable()
         if self.calibration[2]:
-            self.btn_torqueValue.Enable()
+            self.btn_stressValue.Enable()
         else:
-            self.btn_torqueValue.Disable()
+            self.btn_stressValue.Disable()
         self.btn_optStrain.SetValue(self.calibration[0])
         self.btn_optForce.SetValue(self.calibration[1])
-        self.btn_optTorque.SetValue(self.calibration[2])
+        self.btn_optStress.SetValue(self.calibration[2])
         self.btn_strainValue.SetValue(self.calibration[3])
         self.btn_forceValue.SetValue(self.calibration[4])
-        self.btn_torqueValue.SetValue(self.calibration[5])
+        self.btn_stressValue.SetValue(self.calibration[5])
 
         self.panel.Layout()
 
@@ -84,21 +84,21 @@ class CalibrationFrame(wx.Frame):
         """Event handler for the Strain Radio Button."""
         self.btn_strainValue.Enable()
         self.btn_forceValue.Disable()
-        self.btn_torqueValue.Disable()
+        self.btn_stressValue.Disable()
 
 
     def SelectForce(self, evt):
-        """Event handler for the Force Radio Button."""
+        """Event handler for the Force/Torque Radio Button."""
         self.btn_strainValue.Disable()
         self.btn_forceValue.Enable()
-        self.btn_torqueValue.Disable()
+        self.btn_stressValue.Disable()
 
 
-    def SelectTorque(self, evt):
-        """Event handler for the Torque Radio Button."""
+    def SelectStress(self, evt):
+        """Event handler for the Stress Radio Button."""
         self.btn_strainValue.Disable()
         self.btn_forceValue.Disable()
-        self.btn_torqueValue.Enable()
+        self.btn_stressValue.Enable()
 
 
     def OnConfirmButton(self, evt):
@@ -106,10 +106,10 @@ class CalibrationFrame(wx.Frame):
         # Attributes new values to calibration array
         self.calibration[0] = self.btn_optStrain.GetValue()
         self.calibration[1] = self.btn_optForce.GetValue()
-        self.calibration[2] = self.btn_optTorque.GetValue()
+        self.calibration[2] = self.btn_optStress.GetValue()
         self.calibration[3] = self.btn_strainValue.GetValue()
         self.calibration[4] = self.btn_forceValue.GetValue()
-        self.calibration[5] = self.btn_torqueValue.GetValue()
+        self.calibration[5] = self.btn_stressValue.GetValue()
         self.calibration[6] = wx.ID_OK
 
         self.Close()

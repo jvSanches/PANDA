@@ -153,10 +153,10 @@ class PlotFrame(wx.Frame):
         self.axes.set_xlabel("Time (seconds)", size=10)
         if self.unit == 'strain':
             self.axes.set_ylabel("Strain", size=10)
-        if self.unit == 'force':
-            self.axes.set_ylabel("Force (N)", size=10)
-        if self.unit == 'torque':
-            self.axes.set_ylabel("Torque (N.m)", size=10)
+        if self.unit == 'force/torques':
+            self.axes.set_ylabel("Force (N) or Torque (N.m)", size=10)
+        if self.unit == 'stress':
+            self.axes.set_ylabel("Stress (N/m2)", size=10)
 
         plt.setp(self.axes.get_xticklabels(), fontsize=8)
         plt.setp(self.axes.get_yticklabels(), fontsize=8)
@@ -185,10 +185,10 @@ class PlotFrame(wx.Frame):
         if self.unit == 'strain':
             ymin = -self.Ks*5
             ymax = self.Ks*5
-        if self.unit == 'force':
+        if self.unit == 'force/torque':
             ymin = -self.Kf*5
             ymax = self.Kf*5
-        if self.unit == 'torque':
+        if self.unit == 'stress':
             ymin = -self.Kt*5
             ymax = self.Kt*5
         if self.unit == 'power':
@@ -266,10 +266,10 @@ class PlotFrame(wx.Frame):
 
             if self.unit == 'strain':
                 outFile.write("Time,Strain,Avg\n")
-            if self.unit == 'force':
-                outFile.write("Time,Force,Avg\n")
-            if self.unit == 'torque':
-                outFile.write("Time,Torque,Avg\n")
+            if self.unit == 'force/torque':
+                outFile.write("Time,Force/Torque,Avg\n")
+            if self.unit == 'stress':
+                outFile.write("Time,Stress,Avg\n")
             if self.unit == 'power':
                 outFile.write("Time,Power,Avg\n")
 

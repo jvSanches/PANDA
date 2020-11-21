@@ -57,8 +57,8 @@ class SettingsFrame(wx.Frame):
         self.btn_amplifierGain = wx.SpinCtrl(self.panel, value='750', pos=(150, 270), min=0, max=1000)
         
         self.valuesText = wx.StaticText(self.panel, -1, label="Mostrar Valores", pos=(15, 320))
-        self.btn_forces = wx.CheckBox(self.panel, -1, label="Forças", pos=(130, 320))
-        self.btn_torques = wx.CheckBox(self.panel, -1, label="Torques", pos=(280, 320))
+        self.btn_forces = wx.CheckBox(self.panel, -1, label="Forças/Torques", pos=(130, 320))
+        self.btn_stress = wx.CheckBox(self.panel, -1, label="Tensões", pos=(280, 320))
         self.btn_strains = wx.CheckBox(self.panel, -1, label="Deformações", pos=(130, 350))
         self.btn_powers = wx.CheckBox(self.panel, -1, label="Potências", pos=(280, 350))
 
@@ -67,8 +67,8 @@ class SettingsFrame(wx.Frame):
         self.btn_strainConstant = wx.TextCtrl(self.panel, pos=(150, 430))
         self.forceConstantText = wx.StaticText(self.panel, -1, label="Kf", pos=(130, 460))
         self.btn_forceConstant = wx.TextCtrl(self.panel, pos=(150, 460))
-        self.torqueConstantText = wx.StaticText(self.panel, -1, label="Kt", pos=(130, 490))
-        self.btn_torqueConstant = wx.TextCtrl(self.panel, pos=(150, 490))
+        self.stressConstantText = wx.StaticText(self.panel, -1, label="Kt", pos=(130, 490))
+        self.btn_stressConstant = wx.TextCtrl(self.panel, pos=(150, 490))
         self.powerConstantText = wx.StaticText(self.panel, -1, label="Kp", pos=(130, 520))
         self.btn_powerConstant = wx.TextCtrl(self.panel, pos=(150, 520))
 
@@ -132,13 +132,13 @@ class SettingsFrame(wx.Frame):
         self.btn_amplifierGain.SetValue(self.settings[6])
 
         self.btn_forces.SetValue(self.settings[7])
-        self.btn_torques.SetValue(self.settings[8])
+        self.btn_stress.SetValue(self.settings[8])
         self.btn_strains.SetValue(self.settings[9])
         self.btn_powers.SetValue(self.settings[10])
 
         self.btn_strainConstant.SetValue(str(self.settings[11]))
         self.btn_forceConstant.SetValue(str(self.settings[12]))
-        self.btn_torqueConstant.SetValue(str(self.settings[13]))
+        self.btn_stressConstant.SetValue(str(self.settings[13]))
         self.btn_powerConstant.SetValue(str(self.settings[14]))
  
         self.panel.Layout()
@@ -219,12 +219,12 @@ class SettingsFrame(wx.Frame):
         self.settings[5] = self.btn_showValuesGraphic.GetValue()
         self.settings[6] = self.btn_amplifierGain.GetValue()
         self.settings[7] = self.btn_forces.GetValue()
-        self.settings[8] = self.btn_torques.GetValue()
+        self.settings[8] = self.btn_stress.GetValue()
         self.settings[9] = self.btn_strains.GetValue()
         self.settings[10] = self.btn_powers.GetValue()
         self.settings[11] = float(self.btn_strainConstant.GetValue())
         self.settings[12] = float(self.btn_forceConstant.GetValue())
-        self.settings[13] = float(self.btn_torqueConstant.GetValue())
+        self.settings[13] = float(self.btn_stressConstant.GetValue())
         self.settings[14] = float(self.btn_powerConstant.GetValue())
         self.settings[15] = wx.ID_OK
 

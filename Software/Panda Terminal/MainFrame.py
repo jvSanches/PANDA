@@ -102,10 +102,10 @@ class MainFrame(wx.Frame):
 
             if self.settings[5]:
                 if self.settings[7]:
-                    plot = PlotFrame('force', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Força")
+                    plot = PlotFrame('force/torque', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Força / Torque")
                     res = plot.Show()
                 if self.settings[8]:
-                    plot = PlotFrame('torque', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico do Torque")
+                    plot = PlotFrame('stress', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Tensão")
                     res = plot.Show()
                 if self.settings[9]:
                     plot = PlotFrame('strain', self.settings[11], self.settings[12], self.settings[13], self.settings[14], parent=wx.GetTopLevelParent(self), title="Gráfico da Deformação")
