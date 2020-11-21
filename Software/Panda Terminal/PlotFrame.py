@@ -153,7 +153,7 @@ class PlotFrame(wx.Frame):
         self.axes.set_xlabel("Time (seconds)", size=10)
         if self.unit == 'strain':
             self.axes.set_ylabel("Strain", size=10)
-        if self.unit == 'force/torques':
+        if self.unit == 'force/torque':
             self.axes.set_ylabel("Force (N) or Torque (N.m)", size=10)
         if self.unit == 'stress':
             self.axes.set_ylabel("Stress (N/m2)", size=10)
