@@ -54,7 +54,7 @@ Tabela de conteúdos
 Download
 =================
 
-O download do executável encontra-se aqui: [PANDA Software](https://mega.nz/file/uoYHTCrZ#ABBqe71Tc6OB-UX57K_Z6Jc-_zFcgVjPxbuWSQznxSI).
+O download do executável encontra-se aqui: [PANDA Software](https://mega.nz/file/axgA1SaY#NMB4sDLCN5FtJLe6xaybOM77CXp7pwxL-bIBF7l-11k).
 
 
 
