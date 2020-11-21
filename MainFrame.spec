@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['MainFrame.py'],
-             pathex=['C:\\Users\\User\\Desktop\\TCC UML\\PANDA\\Software\\Panda Terminal'],
+             pathex=['C:\\Users\\User\\Desktop\\TCC UML\\PANDA'],
              binaries=[],
              datas=[],
              hiddenimports=[],
