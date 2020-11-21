@@ -22,6 +22,9 @@ import serial.tools.list_ports
 import struct
 from time import sleep
 from datetime import datetime
+import matplotlib.pyplot as plt
+import queue
+import numpy as np
 DEVICE_INQUIRE_TIMEOUT = 0.5
 
 
@@ -150,7 +153,7 @@ class panda:
                 self.send([10, 0])
                 self.waitAck()
                 print("Panda Connected")
-                print(available_pandas)
+                #print(available_pandas)
                 
             else:
                 print("No pandas available...")
@@ -302,5 +305,52 @@ class panda:
             return 0    
         self.send([54]+list(struct.unpack('2B', struct.pack('>h', gain))))
         ack = self.waitAck(1) #Reduzir timeout depois
-        print((ack[3]<<8) + (ack[4]))
+        #print((ack[3]<<8) + (ack[4]))
         return bool(ack)
+
+class monitor:
+    def __init__(self, timestep, samples = 50):
+        self.x_vec = np.linspace(-samples*timestep ,-timestep, samples)
+        self.timestep = timestep
+        self.samples = samples
+        self.curve_legends = []
+        self.curve_getters = []
+        self.curves = []
+        plt.ion()
+        self.fig = plt.figure(figsize=(13,6))
+        self.ax = self.fig.add_subplot(111)
+        self.hists = []        
+        self.curve_colors = ['b','g','r','c','m','y']
+        
+
+    def addCurve(self, c_name, c_getter):
+        self.curve_getters.append(c_getter)
+        self.curve_legends.append(c_name)
+
+        y_hist = queue.Queue()
+        for i in range(self.samples):
+            y_hist.put(0)
+        self.hists.append(y_hist)
+
+        y_vec = np.zeros(self.samples)
+        curve_, = self.ax.plot(self.x_vec, y_vec, self.curve_colors[len(self.curves)])
+        self.curves.append(curve_)
+
+    def start(self):
+        plt.xlabel('Time [s]')
+        plt.title('Monitor')
+        plt.show()
+        plt.grid()
+        plt.legend(self.curve_legends)
+
+    def update(self):
+        for curve_n in range(len(self.curves)):            
+            self.hists[curve_n].get()
+            self.hists[curve_n].put(self.curve_getters[curve_n]())
+            y_vec = list(self.hists[curve_n].queue)
+            self.curves[curve_n].set_ydata(y_vec)
+        min_y = min([min(i.queue) for i in self.hists])
+        max_y = max([max(i.queue) for i in self.hists])
+        marg = 0.1*(max_y - min_y)
+        plt.ylim([min_y-marg, max_y+marg])
+        plt.pause(self.timestep)
