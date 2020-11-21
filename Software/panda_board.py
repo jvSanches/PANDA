@@ -356,6 +356,7 @@ class monitor:
         min_y = min([min(i.queue) for i in self.hists])
         max_y = max([max(i.queue) for i in self.hists])
         marg = 0.1*(max_y - min_y)
+        
         plt.ylim([min_y-marg, max_y+marg])
         plt.pause(self.timestep)
 

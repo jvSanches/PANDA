@@ -18,13 +18,21 @@ import msvcrt
 
 #Instancing of a Panda 
 myPanda=panda('auto')
-
+#myPanda.setEncoderCount(50)
 #Set led frequiency to 15Hz
 myPanda.setLedFreq(15)
 
 # Declaration of a getter function to read the voltage at Analog in 1
 def voltage():
     return 3.3/4096 * myPanda.getAnalog1() #Calculation to map the 12bit adc value to a 0V~3.3V range
+
+# Declaration of a getter function to read the number of turns in the encoder
+def encoderTurns():
+    ticks_per_rev = 40
+    ticks = myPanda.getEncoderCount()
+    if ticks > 2147483648:
+        ticks -= 4294967296
+    return ticks/ticks_per_rev
 
 # Decalration of another getter function, independent from the board. It generates a sawtooth wave
 count_val = 0
@@ -43,7 +51,10 @@ g = monitor(0.05,50, y_label='Voltage')
 g.addCurve('AIN1 Voltage', voltage)
 
 # Same. Again, be sure no to pass the second argument as _function()_
-g.addCurve('Sawtooth', st_wave)
+g.addCurve('Turns', encoderTurns)
+
+# Another curve
+#g.addCurve('Sawtooth', st_wave)
 
 #Led will start blinking at 15 Hz
 myPanda.setLedMode("BLINK")

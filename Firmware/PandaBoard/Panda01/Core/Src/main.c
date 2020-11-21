@@ -96,6 +96,7 @@ static void can_msgConfig(void);
 /* USER CODE BEGIN 0 */
 uint8_t canRx[8];
 uint32_t aux ;
+uint32_t enc = 0;
 /* USER CODE END 0 */
 
 /**
@@ -167,7 +168,7 @@ int main(void)
 	  userLedController();
 	  i2cController();
 	  serialController();
-
+	  enc = getEncoderCount();
 
 
 //	  if (getUserIn(1)==0){
