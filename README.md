@@ -100,30 +100,30 @@ Aplicações Atuais
 
 ### Deformação de Barras
 
-...
+Essa aplicação tem como foco auxiliar em aulas de Instrumentação. Como a PANDA capta dados vindos de extensômetros, ela pode medir a deformação ocorrida em uma barra e mostrar esse valor em tempo real em um gráfico. Se essa deformação ocorre devido a um peso, este pode ser calculado também. Dessa forma, é possível construir uma balança simples e os alunos podem consolidar diversos conceitos ligados a Instrumentação.
 
 ### Comunicação com Protocolos
 
-...
+Como já dito anteriormente, a PANDA serve como plataforma para comunicação entre diversos protocolos. Imagine que em um laboratório de pesquisa alguns equipamentos funcionem com protocolo CAN, enquanto outros funcionam com I2C. O funcionamento conjunto desses aparelhos pode ser facilitado através de nossa placa, já que ela consegue entender e enviar informações para ambos os protocolos, além de RS485 e USB.
 
 Aplicações Futuras
 =================
 
 ### Torque em Exoesqueletos
 
-...
+Talvez seja uma constatação óbvia, mas exoesqueletos devem ser precisos. Se você aplica um torque específico em um local equivalente ao joelho de um exoesqueleto, é necessário analisar se este torque exercido realmente é o desejado. Além disso, o monitoramento também é essencial se levar em consideração o uso desse equipamento para fisioterapia e reabilitação, situações onde um torque indesejado pode significar consequências graves para o usuário. Portanto, aplicando uma célula de carga nesse exoesqueleto e conectando extensômetros a ela, pode-se não só verificar em tempo real o torque, como também controlá-lo estabelecendo rotinas de Controle.
 
 ### Curva de Torque de Motores
 
-...
+Em projetos de equipamentos que exigem motores trifásicos, sobretudo para ferramentas relacionadas a processos de usinagem, uma análise necessária é a da curva de torque desses motores. Com a PANDA e seu software, basta selecionar a opção desse gráfico nas configurações, e uma vez que uma célula de carga esteja acoplada ao motor, essa curva pode ser gerada para a interpretação do projetista.
 
 ### Caracterização de Motores
 
-...
+No âmbito da Robótica, o estudo de motores adequados para as aplicações é de grande relevância. Aproveitamos para dar um alô para a [Equipe ThundeRatz de Robótica](thunderatz.org)! Em grupos de extensão como esse, fazer a caracterização de motores é importante para verificar informações deles que podem não estar disponíveis tão facilmente. Também é interessante o seu uso para a verificação de motores que foram revitalizados. 
 
 ### Leitura de Termistores
 
-...
+Para a área de Térmicas a PANDA também possui função! Em aplicações utilizando motores a vapor, além de checar informações sobre o motor em si, também é preciso manter controle da temperatura do sistema. Assim, nossa placa também consegue realizar a leitura de termistores.
 
 ### Controle de Módulo Motorizado
 
