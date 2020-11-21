@@ -65,6 +65,7 @@ class MainFrame(wx.Frame):
 
     def OnTimeToClose(self, evt):
         """Event handler for closing."""
+        myPanda.disconnect()
         self.Close()
 
 
@@ -83,6 +84,7 @@ class MainFrame(wx.Frame):
     def onGraphicsButton(self, evt):
         """Event handler for the Graphics button."""
         if myPanda.exists():
+            '''
             if self.settings[1] or self.settings[2] or self.settings[3] or self.settings[4] or self.settings[5]:
                 if self.settings[15] == wx.ID_OK:
                     myPanda.setGain(self.settings[6])
@@ -95,8 +97,8 @@ class MainFrame(wx.Frame):
                     if self.calibration[1]:
                         myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1)))
                     if self.calibration[2]:
-                        myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1)))
-                
+                        myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
+            '''
 
             if self.settings[5]:
                 if self.settings[7]:
