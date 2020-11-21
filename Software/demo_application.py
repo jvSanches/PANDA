@@ -37,7 +37,7 @@ def st_wave():
 
 
 #Instancing of a monitor with sampling time and number of samples to be shown at once
-g = monitor(0.1, 50)
+g = monitor(0.05,50, y_label='Voltage')
 
 #Assign a curve to represent the voltage value. Note the first argument is a legend and the second is a FUNCTION 
 g.addCurve('AIN1 Voltage', voltage)
@@ -50,15 +50,24 @@ myPanda.setLedMode("BLINK")
 
 #The monitor will pop-up
 g.start()
-print("Press esc on the console to stop")
+print("Press ESC to stop or Space to pause")
 while 1:
     #Keeps updating the graph
     g.update()
 
     #Until user presses ESC on the console    
     if msvcrt.kbhit():
-        if ord(msvcrt.getch()) == 27:
+        k = ord(msvcrt.getch())
+        if  k == 27:
+            print("Stopping")
             break
+        elif k == 32:
+            g.stop()
+            input("Press Enter to resume...")
+            g.resume()
+            print("Press ESC to stop or Space to pause")
+        else:
+            print("Press ESC to stop or Space to pause")
 
 myPanda.setLedMode("OFF")
 # Disconnects

@@ -309,7 +309,7 @@ class panda:
         return bool(ack)
 
 class monitor:
-    def __init__(self, timestep, samples = 50):
+    def __init__(self, timestep, samples = 50, y_label = 'Value'):
         self.x_vec = np.linspace(-samples*timestep ,-timestep, samples)
         self.timestep = timestep
         self.samples = samples
@@ -321,6 +321,7 @@ class monitor:
         self.ax = self.fig.add_subplot(111)
         self.hists = []        
         self.curve_colors = ['b','g','r','c','m','y']
+        self.y_label = y_label
         
 
     def addCurve(self, c_name, c_getter):
@@ -338,6 +339,7 @@ class monitor:
 
     def start(self):
         plt.xlabel('Time [s]')
+        plt.ylabel(self.y_label)
         plt.title('Monitor')
         plt.show()
         plt.grid()
@@ -346,11 +348,19 @@ class monitor:
     def update(self):
         for curve_n in range(len(self.curves)):            
             self.hists[curve_n].get()
-            self.hists[curve_n].put(self.curve_getters[curve_n]())
+            n_value = self.curve_getters[curve_n]()
+            self.hists[curve_n].put(n_value)
             y_vec = list(self.hists[curve_n].queue)
             self.curves[curve_n].set_ydata(y_vec)
+            
         min_y = min([min(i.queue) for i in self.hists])
         max_y = max([max(i.queue) for i in self.hists])
         marg = 0.1*(max_y - min_y)
         plt.ylim([min_y-marg, max_y+marg])
         plt.pause(self.timestep)
+
+    def stop(self):
+        plt.ioff()
+    
+    def resume(self):
+        plt.ion()
