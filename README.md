@@ -81,7 +81,7 @@ Pronto! O executável gerado estará na pasta dist, ainda no diretório onde est
 
 * Essa é a parte mais complicada. É necessário que você calcule a constante multiplicadora para cada valor desejado. O valor fornecido pela placa é o da tensão de saída da Ponte de Wheatstone, e para convertê-lo é necessário realizar algumas contas, que dependem de propriedades da sua aplicação.
 
-Para o cálculo de Ks (constante de deformação): <img src="http://www.sciweavers.org/upload/Tex2Img_1605911981/render.png" width="100">, onde GF é o Gage Factor dos extensômetros, Vi é a tensão de entrada da ponte (o _default_ é 3.3V), Vo é a tensão de saída e ε é a deformação. As outras constantes vêm de fórmulas de Resistência dos Materiais. Dica: comece encontrando a tensão exercida na célula de carga (a tensão que gera a deformação). A partir daí, é possível encontrar o momento sendo exercido (torque) e a força. Tudo pode ser escrito em função da tensão de saída.
+Para o cálculo de Ks (constante de deformação): <img src="http://www.sciweavers.org/upload/Tex2Img_1605911981/render.png" width="100">, onde GF é o Gauge Factor dos extensômetros, Vi é a tensão de entrada da ponte (o _default_ é 3.3V), Vo é a tensão de saída e ε é a deformação. As outras constantes vêm de fórmulas de Resistência dos Materiais. Dica: comece encontrando a tensão exercida na célula de carga (a tensão que gera a deformação). A partir daí, é possível encontrar o momento sendo exercido (torque) e a força. Tudo pode ser escrito em função da tensão de saída.
 
 ### Calibração
 
