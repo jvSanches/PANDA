@@ -46,5 +46,5 @@ uint16_t FIRFilter_get(FIRFilter* f) {
     }
     acc += (int32_t)f->history[index] * (int32_t)filter_taps[i];
   };
-  return acc / 65536;
+  return acc / 65460;
 }
