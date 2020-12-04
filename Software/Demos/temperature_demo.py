@@ -76,7 +76,7 @@ def calc_temp(adc_value):
     Vref = 3.3
     Vadc = (adc_value/4096) * Vref
     Rt = ((10000 * Vadc) - Vref ) / (1 - Vadc)
-    ##Rt = 10000   # Unncoment to avoid errors while testing. Keeps output at 25 deg.C
+    Rt = 10000   # Unncoment to avoid errors while testing. Keeps output at 25 deg.C
     Temp_K = (1.0 / (a + b*log(Rt) + c*log(Rt)**3))
     return Temp_K-273
 

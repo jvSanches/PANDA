@@ -59,7 +59,7 @@ class MainFrame(wx.Frame):
         panel.Layout()
         
         # Initial value of arrays
-        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 4000, 45, 0, 0]
+        self.settings = ['0', False, False, False, False, False, '750', False, False, False, False, 0.0015, 4000, 1, 0, 0]
         self.calibration = [True, False, False, '0', '0', '0', 0]
 
 
@@ -84,12 +84,12 @@ class MainFrame(wx.Frame):
     def onGraphicsButton(self, evt):
         """Event handler for the Graphics button."""
         if myPanda.exists():
-            '''
             if self.settings[1] or self.settings[2] or self.settings[3] or self.settings[4] or self.settings[5]:
                 if self.settings[15] == wx.ID_OK:
                     myPanda.setGain(self.settings[6])
                     self.settings[15] = 0
 
+            
                 
                 if self.calibration[6] == wx.ID_OK:
                     if self.calibration[0]:
@@ -98,7 +98,7 @@ class MainFrame(wx.Frame):
                         myPanda.runAutoOffset(int(2048*(((1/3.3)*(self.calibration[4]/self.settings[12])) + 1)))
                     if self.calibration[2]:
                         myPanda.runAutoOffset(2048*(((1/3.3)*(self.calibration[5]/self.settings[13])) + 1))
-            '''
+            
 
             if self.settings[5]:
                 if self.settings[7]:

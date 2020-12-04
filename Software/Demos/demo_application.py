@@ -28,7 +28,7 @@ def voltage():
 
 # Declaration of a getter function to read the number of turns in the encoder
 def encoderTurns():
-    ticks_per_rev = 40
+    ticks_per_rev = 100
     ticks = myPanda.getEncoderCount()
     if ticks > 2147483648:
         ticks -= 4294967296

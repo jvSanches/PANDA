@@ -13,8 +13,9 @@ from time import sleep
 from panda_board import panda
 import msvcrt
 
+# N/V = g/bit  * 1N/100g -> -9,71 N/bit * bit/V
 #Constant to be used as converting factor from 12bit adc value to a weight measurement
-Km = -0.7070365358592695 # g/bit
+Km = -0.971 # g/bit
 Gain = 600
 
 myPanda = panda('auto') # A serial port can be especified. "auto" makes everything easier
@@ -50,5 +51,6 @@ while 1:
                 print("New Km is: ", Km)
 
 myPanda.setLedMode("OFF") #Mode 0 = OFF
+print(Km)
 
 myPanda.disconnect()

@@ -156,7 +156,7 @@ class PlotFrame(wx.Frame):
         if self.unit == 'force/torque':
             self.axes.set_ylabel("Force (N) or Torque (N.m)", size=10)
         if self.unit == 'stress':
-            self.axes.set_ylabel("Stress (N/m2)", size=10)
+            self.axes.set_ylabel("Voltage", size=10)
 
         plt.setp(self.axes.get_xticklabels(), fontsize=8)
         plt.setp(self.axes.get_yticklabels(), fontsize=8)
@@ -186,8 +186,8 @@ class PlotFrame(wx.Frame):
             ymin = -self.Ks*5
             ymax = self.Ks*5
         if self.unit == 'force/torque':
-            ymin = -self.Kf*5
-            ymax = self.Kf*5
+            ymin = -self.Kf*0.1
+            ymax = self.Kf*0.1
         if self.unit == 'stress':
             ymin = -self.Kt*5
             ymax = self.Kt*5
