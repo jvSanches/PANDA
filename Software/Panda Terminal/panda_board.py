@@ -30,10 +30,11 @@ DEVICE_INQUIRE_TIMEOUT = 0.5
 
 def getPandaPorts():
     ports = [str(i).split()[0] for i in serial.tools.list_ports.comports()]
+    
     pandas = []
     for portname in ports:
         try:
-            device = serial.Serial(portname, baudrate = 57600)
+            device = serial.Serial(portname, baudrate = 57600, write_timeout=0.2)
             sleep(0.5)
             device.write([35, 1, 1, 13, 10])
             sleep(0.1)
@@ -41,6 +42,7 @@ def getPandaPorts():
             scanstart = datetime.now()
             timeout = 0        
             while device.in_waiting > 0 and not timeout:
+                
                 timeout = (datetime.now() - scanstart).total_seconds() > DEVICE_INQUIRE_TIMEOUT
                 answer = (device.read(device.in_waiting))
             if(b'I am a Panda' in answer):            
@@ -157,6 +159,7 @@ class panda:
                 
             else:
                 print("No pandas available...")
+                quit()
 
     def exists(self):
         if self.board != 0:

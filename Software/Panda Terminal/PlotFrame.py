@@ -183,8 +183,8 @@ class PlotFrame(wx.Frame):
         xmin = xmax - gap
 
         if self.unit == 'strain':
-            ymin = -self.Ks*5
-            ymax = self.Ks*5
+            ymin = -self.Ks*0.3
+            ymax = self.Ks*0.3
         if self.unit == 'force/torque':
             ymin = -self.Kf*0.1
             ymax = self.Kf*0.1
