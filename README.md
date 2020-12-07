@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/static/v1?label=PANDA&message=v1.0&color=ceccd6&style=for-the-badge&logo=python"/> 
+<img src="https://img.shields.io/static/v1?label=PANDA&message=v1.0&color=ceccd6&style=for-the-badge&logo=python"/> <img src="https://raw.githubusercontent.com/ThundeRatz/vss_simulation/52ecf35e956d6c7a864fab944257862ca382c9ee/docs/badge_adp.svg"/> 
 
 <h1 align="center">PANDA :panda_face: </h1>
 <p align="center">Placa de Aquisição e coNdicionamento de DAdos</p>
