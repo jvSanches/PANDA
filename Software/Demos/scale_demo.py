@@ -16,7 +16,7 @@ import msvcrt
 # N/V = g/bit  * 1N/100g -> -9,71 N/bit * bit/V
 #Constant to be used as converting factor from 12bit adc value to a weight measurement
 Km = -0.971 # g/bit
-Gain = 600
+Gain = 60
 
 myPanda = panda('auto') # A serial port can be especified. "auto" makes everything easier
 
@@ -32,8 +32,10 @@ while 1:
         digital_value += myPanda.getAmpValue()
     digital_value /= samples
     weight = (digital_value - 2048) * Km # corrects mid scale offset and apllies the linear factor
-    print("Weight measurement: %.1f g" %(weight)) 
+    print("Weight measurement: %.1f g" %(int(weight))) 
     sleep(0.1)
+
+
 
     # Scans for keypress
     if msvcrt.kbhit():
@@ -42,6 +44,7 @@ while 1:
             break #Stops the program
         elif key == 122: # Z Key
             print("Zeroing the device")
+
             myPanda.runAutoOffset() #Hardware offset performed by the board
 
         elif key == 99: #C Key
@@ -54,3 +57,5 @@ myPanda.setLedMode("OFF") #Mode 0 = OFF
 print(Km)
 
 myPanda.disconnect()
+
+
