@@ -29,5 +29,5 @@ void digipotWrite(uint8_t ndata){
 }
 void spiInit(SPI_HandleTypeDef *nhspix){
 	hspix = nhspix;
-	digipotWrite(0);
+	digipotWrite(255);
 }

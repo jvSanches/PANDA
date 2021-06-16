@@ -15,8 +15,8 @@ import msvcrt
 
 # N/V = g/bit  * 1N/100g -> -9,71 N/bit * bit/V
 #Constant to be used as converting factor from 12bit adc value to a weight measurement
-Km = -0.971 # g/bit
-Gain = 60
+Km = 1 # g/bit
+Gain = 20
 
 myPanda = panda('auto') # A serial port can be especified. "auto" makes everything easier
 
@@ -31,8 +31,9 @@ while 1:
     for i in range(samples):
         digital_value += myPanda.getAmpValue()
     digital_value /= samples
-    weight = (digital_value - 2048) * Km # corrects mid scale offset and apllies the linear factor
-    print("Weight measurement: %.1f g" %(int(weight))) 
+    weight = (digital_value - 32768) * Km # corrects mid scale offset and apllies the linear factor
+    print(weight)
+    #print("Weight measurement: %.1f g" %(int(weight))) 
     sleep(0.1)
 
 
@@ -52,6 +53,8 @@ while 1:
             if known_value != None:
                 Km = known_value / (digital_value-2048)
                 print("New Km is: ", Km)
+        elif key == 103 : #g Key
+            myPanda.setGain(int(input("Gain: ")))
 
 myPanda.setLedMode("OFF") #Mode 0 = OFF
 print(Km)

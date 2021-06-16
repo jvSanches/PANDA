@@ -50,6 +50,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -58,16 +60,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define IN_1_Pin GPIO_PIN_0
-#define IN_1_GPIO_Port GPIOF
+#define IN1_Pin GPIO_PIN_0
+#define IN1_GPIO_Port GPIOF
 #define SPI1_SS1_Pin GPIO_PIN_1
 #define SPI1_SS1_GPIO_Port GPIOF
 #define AMP_OUT_Pin GPIO_PIN_0
 #define AMP_OUT_GPIO_Port GPIOA
 #define AMP_OFFSET_Pin GPIO_PIN_4
 #define AMP_OFFSET_GPIO_Port GPIOA
-#define IN_2_Pin GPIO_PIN_0
-#define IN_2_GPIO_Port GPIOB
+#define IN2_Pin GPIO_PIN_0
+#define IN2_GPIO_Port GPIOB
 #define ENC_CHB_Pin GPIO_PIN_8
 #define ENC_CHB_GPIO_Port GPIOA
 #define ENC_CHA_Pin GPIO_PIN_9
@@ -76,10 +78,6 @@ void Error_Handler(void);
 #define LED_BLUE_GPIO_Port GPIOA
 #define LED_GREEN_Pin GPIO_PIN_3
 #define LED_GREEN_GPIO_Port GPIOB
-#define OUT_1_Pin GPIO_PIN_4
-#define OUT_1_GPIO_Port GPIOB
-#define OUT_2_Pin GPIO_PIN_5
-#define OUT_2_GPIO_Port GPIOB
 #define SPI1_SS2_Pin GPIO_PIN_6
 #define SPI1_SS2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
