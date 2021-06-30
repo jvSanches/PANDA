@@ -22,12 +22,19 @@
 #define LED_ON 1
 #define LED_BLINKING 2
 
+#define OUT_OFF 0
+#define OUT_ON 1
+#define OUT_PWM 2
+
 uint8_t status_led = LED_OFF;
 uint8_t user_led = LED_OFF;
 uint16_t user_led_period = 1000;
 
-uint8_t userOut1 = 0;
-uint8_t userOut2 = 0;
+uint8_t out1_mode = 0;
+uint8_t out2_mode = 0;
+
+uint8_t out1_duty = 0;
+uint8_t out2_duty = 0;
 
 /*
  * statusLedController()
@@ -129,32 +136,49 @@ void userLedController(){
 }
 
 /*
- * userOutWrite(output selection, duty cycle)
- * sets the duty cycle for a user output pin
+ * setUserOutMode(output selection, mode)
+ *
  */
 
 TIM_HandleTypeDef *pwm_timer;
 
-void setUserOut(uint8_t out, uint8_t state){
-	if (state != 0 && state != 1){
+void setUserOutMode(uint8_t out, uint8_t mode){
+	if (mode != OUT_ON && mode != OUT_OFF && mode != OUT_PWM ){
 		return;
 	}
-	setUserDuty(out, state * 255);
+	switch (out){
+	case 1:
+		out1_mode = mode;
+		break;
+	case 2:
+		out2_mode = mode;
+	}
+
+	if (mode == OUT_PWM){
+
+	}else{
+		setUserOutDuty(out, mode * 255);
+	}
+
 
 }
 
-void setUserDuty(uint8_t out, uint8_t duty){
+void setUserOutDuty(uint8_t out, uint8_t duty){
 	if (duty < 0 || duty > 255){
 		return;
 	}
+
+	if (duty != 0 && duty!=255 && getUserOutMode(out) != OUT_PWM){
+		setUserOutMode(out, OUT_PWM);
+	}
 	switch(out){
 	case 1:
-		userOut1 = duty;
+		out1_duty = duty;
 		pwm_timer->Instance->CCR1 = duty;
 		break;
 
 	case 2:
-		userOut2 = duty;
+		out2_duty = duty;
 		pwm_timer->Instance->CCR2 = duty;
 		break;
 	}
@@ -164,18 +188,32 @@ void setUserDuty(uint8_t out, uint8_t duty){
  * getUserOut(output)
  * Return the current output value
  */
-uint8_t getUserOut(uint8_t out){
-	uint8_t state;
+uint8_t getUserOutMode(uint8_t out){
+	uint8_t mode;
 	switch(out){
 	case 1:
-		state = userOut1;
+		mode = out1_mode;
 		break;
 
 	case 2:
-		state = userOut2;
+		mode = out2_mode;
 		break;
 	}
-	return state;
+	return mode;
+}
+
+uint8_t getUserOutDuty(uint8_t out){
+	uint8_t duty;
+	switch(out){
+	case 1:
+		duty = out1_duty;
+		break;
+
+	case 2:
+		duty = out2_duty;
+		break;
+	}
+	return duty;
 }
 
 
@@ -188,8 +226,9 @@ void outputsInit(TIM_HandleTypeDef *htimx, TIM_HandleTypeDef *PWMtimx){
 	statusLedMode(0);
 	userLedMode(0);
 	pwm_timer = PWMtimx;
-	HAL_TIM_Base_Start_IT(pwm_timer);
-	setUserOut(1, 0);
-	setUserOut(2, 0);
+	HAL_TIM_PWM_Start(pwm_timer, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(pwm_timer, TIM_CHANNEL_2);
+	setUserOutMode(1, OUT_OFF);
+	setUserOutMode(2, OUT_OFF);
 
 }

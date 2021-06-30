@@ -24,13 +24,13 @@ void userLedController();
 uint8_t getUserLedMode(void);
 uint8_t getUserLedFreq(void);
 
-void setUserOut(uint8_t out, uint8_t state);
-uint8_t getUserOut(uint8_t out);
-
+void setUserOutMode(uint8_t out, uint8_t mode);
+uint8_t getUserOutMode(uint8_t out);
+void setUserOutDuty(uint8_t out, uint8_t duty);
+uint8_t getUserOutDuty(uint8_t out);
 
 void outputsInit(TIM_HandleTypeDef *htimx,  TIM_HandleTypeDef *PWMtimx);
 
-void setUserDuty(uint8_t out, uint8_t duty);
 
 
 #endif /* INC_OUTPUTS_H_ */

@@ -144,8 +144,8 @@ int main(void)
 	}else if(counter == 64){
 		dir = 1;
 	}
-	setUserDuty(1, counter);
-	setUserDuty(2, counter);
+	setUserOutDuty(1, counter);
+	setUserOutDuty(2, counter);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

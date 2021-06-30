@@ -165,41 +165,58 @@ uint8_t usb_processFrame(uint8_t *frame){
 
 	case 14://Set user IO Out 1
 		value = frame[3];
-		setUserOut(1, value);
+		setUserOutMode(1, value);
 	case 15://Get user out 1
 		res_n = 2;
 		response[2] = 143;
-		response[3] = getUserOut(1);
+		response[3] = getUserOutMode(1);
 		break;
 
 	case 16://Set user IO Out 2
 		value = frame[3];
-		setUserOut(2, value);
+		setUserOutMode(2, value);
 	case 17://Get user out 2
 		res_n = 2;
 		response[2] = 145;
-		response[3] = getUserOut(2);
+		response[3] = getUserOutMode(2);
+		break;
+	case 18://Set user pwm Out 1
+		value = frame[3];
+		setUserOutDuty(1, value);
+	case 19://Get user out 1 duty
+		res_n = 2;
+		response[2] = 147;
+		response[3] = getUserOutMode(1);
+		break;
+	case 20://Set user pwm Out 1
+		value = frame[3];
+		setUserOutDuty(2, value);
+	case 21://Get user out 2 duty
+		res_n = 2;
+		response[2] = 148;
+		response[3] = getUserOutMode(2);
 		break;
 
-	case 20://Read analog in 2 (amp)
+
+	case 22://Read analog in 2 (amp)
 		res_n = 3;
-		response[2] = 148;
+		response[2] = 150;
 		res_val = getFromFilter();
 		response[3] = get8MSB(res_val);
 		response[4] = get8LSB(res_val);
 		break;
 
-	case 21://Read user analog in 1
+	case 23://Read user analog in 1
 		res_n = 3;
-		response[2] = 149;
+		response[2] = 151;
 		res_val = getAnalogRead(0);
 		response[3] = get8MSB(res_val);
 		response[4] = get8LSB(res_val);
 		break;
 
-	case 22://Read user analog in 2
+	case 24://Read user analog in 2
 		res_n = 3;
-		response[2] = 150;
+		response[2] = 152;
 		res_val = getAnalogRead(1);
 		response[3] = get8MSB(res_val);
 		response[4] = get8LSB(res_val);
