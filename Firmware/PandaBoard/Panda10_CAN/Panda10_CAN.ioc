@@ -148,6 +148,7 @@ RCC.HSI48_VALUE=48000000
 PB3.Locked=true
 PB4.Signal=S_TIM3_CH1
 PA3.Signal=USART2_RX
+NVIC.FDCAN1_IT0_IRQn=true\:0\:0\:false\:false\:true\:true\:true
 PA5.Mode=Full_Duplex_Master
 PA2.Locked=true
 PB3.GPIO_Label=LED_GREEN

@@ -21,6 +21,7 @@
 #define LED_OFF 0
 #define LED_ON 1
 #define LED_BLINKING 2
+#define LED_TEST 3
 
 #define OUT_OFF 0
 #define OUT_ON 1

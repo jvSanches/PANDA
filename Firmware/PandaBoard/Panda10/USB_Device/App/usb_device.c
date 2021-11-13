@@ -50,14 +50,19 @@ extern USBD_DescriptorsTypeDef CDC_Desc;
  * -- Insert your variables declaration here --
  */
 /* USER CODE BEGIN 0 */
-
+uint8_t MX_USB_getHost(void){
+	return (hUsbDeviceFS.dev_state == 3);
+}
 /* USER CODE END 0 */
 
 /*
  * -- Insert your external function declaration here --
  */
 /* USER CODE BEGIN 1 */
-
+void MX_USB_Device_DeInit(void){
+	USBD_Stop(&hUsbDeviceFS);
+	USBD_DeInit(&hUsbDeviceFS);
+}
 /* USER CODE END 1 */
 
 /**

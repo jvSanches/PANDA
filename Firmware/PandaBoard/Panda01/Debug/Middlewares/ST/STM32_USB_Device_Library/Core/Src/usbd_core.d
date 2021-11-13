@@ -13,6 +13,7 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o: \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
  ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio_ex.h \
@@ -74,6 +75,8 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o: \
 ../Drivers/CMSIS/Include/cmsis_gcc.h:
 
 ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h:
+
+../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
 
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h:
 

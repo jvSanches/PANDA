@@ -61,7 +61,7 @@ void ADC1_2_IRQHandler(void);
 void USB_LP_IRQHandler(void);
 void TIM7_IRQHandler(void);
 /* USER CODE BEGIN EFP */
-
+void FDCAN1_IT0_IRQHandler(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

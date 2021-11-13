@@ -160,6 +160,14 @@ class panda:
             else:
                 print("No pandas available...")
                 quit()
+        else: 
+            self.board = serial.Serial(port, baudrate = 57600, timeout = 0.2)
+            self.send([10, 2])
+            self.waitAck()
+            sleep(0.5)
+            self.send([10, 0])
+            self.waitAck()
+            print("Panda Connected")
 
     def exists(self):
         if self.board != 0:
@@ -213,9 +221,9 @@ class panda:
         return bool(self.waitAck())
 
     def getAmpValue(self):
-        self.send([20])
+        self.send([22])
         response = self.waitAck()
-        if response[2] == 148:
+        if response[2] == 150:
             value = (response[3]<<8) + (response[4])
             return value
         else:
@@ -299,7 +307,7 @@ class panda:
         if zero_value < 0 or zero_value  > 4095:
             print("Invalid Offset")
             return 0    
-        self.send([62]+list(struct.unpack('2B', struct.pack('>h', zero_value))))
+        self.send([62])#+list(struct.unpack('2B', struct.pack('>h', zero_value))))
         return bool(self.waitAck(2))#Reduzir timeout depois
 
     def setGain(self, gain):

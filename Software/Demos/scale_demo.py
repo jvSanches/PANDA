@@ -18,7 +18,7 @@ import msvcrt
 Km = 1 # g/bit
 Gain = 20
 
-myPanda = panda('auto') # A serial port can be especified. "auto" makes everything easier
+myPanda = panda('COM9') # A serial port can be especified. "auto" makes everything easier
 
 print("Press ESC to stop, Z to zero or C to calibrate \n")
 input("Hit Enter key to start")
@@ -32,7 +32,7 @@ while 1:
         digital_value += myPanda.getAmpValue()
     digital_value /= samples
     weight = (digital_value - 32768) * Km # corrects mid scale offset and apllies the linear factor
-    print(weight)
+    print(int(weight))
     #print("Weight measurement: %.1f g" %(int(weight))) 
     sleep(0.1)
 

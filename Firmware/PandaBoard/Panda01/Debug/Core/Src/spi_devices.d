@@ -10,6 +10,7 @@ Core/Src/spi_devices.o: ../Core/Src/spi_devices.c ../Core/Inc/main.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
  ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio_ex.h \
@@ -63,6 +64,8 @@ Core/Src/spi_devices.o: ../Core/Src/spi_devices.c ../Core/Inc/main.h \
 ../Drivers/CMSIS/Include/cmsis_gcc.h:
 
 ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h:
+
+../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
 
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h:
 

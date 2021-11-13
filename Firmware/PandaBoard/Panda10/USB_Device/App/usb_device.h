@@ -82,7 +82,8 @@ void MX_USB_Device_Init(void);
  * -- Insert functions declaration here --
  */
 /* USER CODE BEGIN FD */
-
+void MX_USB_Device_DeInit(void);
+uint8_t MX_USB_getHost(void);
 /* USER CODE END FD */
 /**
   * @}

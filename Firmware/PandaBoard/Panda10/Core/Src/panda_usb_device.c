@@ -201,7 +201,7 @@ uint8_t usb_processFrame(uint8_t *frame){
 	case 22://Read analog in 2 (amp)
 		res_n = 3;
 		response[2] = 150;
-		res_val = getFromFilter();
+		res_val = getAnalogRead(2);
 		response[3] = get8MSB(res_val);
 		response[4] = get8LSB(res_val);
 		break;

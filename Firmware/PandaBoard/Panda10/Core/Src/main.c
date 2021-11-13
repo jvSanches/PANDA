@@ -27,6 +27,7 @@
 #include "outputs.h"
 #include "acquisition.h"
 #include "panda_usb_device.h"
+#include "stm32g4xx_hal_fdcan.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +61,11 @@ TIM_HandleTypeDef htim7;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+FDCAN_HandleTypeDef hfdcan1;
+FDCAN_FilterTypeDef canFilterConfig;
+FDCAN_TxHeaderTypeDef canHeaderConfig;
+FDCAN_RxHeaderTypeDef RxHeader;
+uint8_t rx_data[16];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -76,13 +81,20 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
+static void MX_FDCAN1_Init(void);
+static void CAN_Configure(void);
+
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int16_t counter = 127;
+float counter = 0;
 int8_t dir = 1;
+uint32_t enc = 0;
+uint32_t act_gain = 10;
+uint8_t usb_enabled = 1;
+uint8_t can_data[3];
 /* USER CODE END 0 */
 
 /**
@@ -128,6 +140,12 @@ int main(void)
   spiInit(&hspi1);
   statusLedBlink();
   acquisitionInit(&hadc1, &htim1, &hdac1);
+  setEncoderCount(2048);
+  userLedMode(1);
+
+
+
+  setGain(200);
 
   /* USER CODE END 2 */
 
@@ -137,15 +155,31 @@ int main(void)
   {
 	usbController();
 	userLedController();
-	HAL_Delay(10);
-	counter += dir;
-	if (counter == 192){
-		dir = -1;
-	}else if(counter == 64){
-		dir = 1;
-	}
-	setUserOutDuty(1, counter);
-	setUserOutDuty(2, counter);
+
+	HAL_Delay(20);
+	counter = 3.3 * (float)getAnalogRead(2)/ 65536.0;
+	enc = getEncoderCount();
+	setOffset(enc);
+	  if ((usb_enabled == 1) && (HAL_GetTick()>1000)){
+		  if (MX_USB_getHost()){
+			  usb_enabled = 2;
+		  }else{
+			  MX_USB_Device_DeInit();
+			  usb_enabled = 0;
+			  userLedMode(0);
+			  MX_FDCAN1_Init();
+			  HAL_FDCAN_Start(&hfdcan1);
+			  HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+			  CAN_Configure();
+			  HAL_Delay(500);
+			  userLedMode(1);
+			  can_data[0] = 55;
+			  can_data[1] = 66;
+			  HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &canHeaderConfig, can_data);
+			  HAL_Delay(500);
+			  userLedMode(0);
+		  }
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -200,11 +234,12 @@ void SystemClock_Config(void)
   /** Initializes the peripherals clocks
   */
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_I2C1
-                              |RCC_PERIPHCLK_USB|RCC_PERIPHCLK_ADC12;
+                              |RCC_PERIPHCLK_USB|RCC_PERIPHCLK_ADC12|RCC_PERIPHCLK_FDCAN;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
   PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
   PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
+  PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -266,7 +301,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_640CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_12CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -286,6 +321,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = ADC_REGULAR_RANK_3;
+  sConfig.SamplingTime = ADC_SAMPLETIME_640CYCLES_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -499,7 +535,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 25;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 65535;
+  htim3.Init.Period = 256;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
@@ -682,7 +718,78 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	sendToFilter();
+
+}
+
+/**
+  * @brief FDCAN1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_FDCAN1_Init(void)
+{
+
+  /* USER CODE BEGIN FDCAN1_Init 0 */
+
+  /* USER CODE END FDCAN1_Init 0 */
+
+  /* USER CODE BEGIN FDCAN1_Init 1 */
+
+  /* USER CODE END FDCAN1_Init 1 */
+  hfdcan1.Instance = FDCAN1;
+  hfdcan1.Init.ClockDivider = FDCAN_CLOCK_DIV1;
+  hfdcan1.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+  hfdcan1.Init.Mode = FDCAN_MODE_NORMAL;
+  hfdcan1.Init.AutoRetransmission = DISABLE;
+  hfdcan1.Init.TransmitPause = DISABLE;
+  hfdcan1.Init.ProtocolException = DISABLE;
+  hfdcan1.Init.NominalPrescaler = 400;
+  hfdcan1.Init.NominalSyncJumpWidth = 1;
+  hfdcan1.Init.NominalTimeSeg1 = 13;
+  hfdcan1.Init.NominalTimeSeg2 = 2;
+  hfdcan1.Init.DataPrescaler = 1;
+  hfdcan1.Init.DataSyncJumpWidth = 1;
+  hfdcan1.Init.DataTimeSeg1 = 13;
+  hfdcan1.Init.DataTimeSeg2 = 2;
+  hfdcan1.Init.StdFiltersNbr = 0;
+  hfdcan1.Init.ExtFiltersNbr = 0;
+  hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+  if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN FDCAN1_Init 2 */
+
+  /* USER CODE END FDCAN1_Init 2 */
+
+}
+void CAN_Configure(){
+	canFilterConfig.IdType = FDCAN_STANDARD_ID;
+	canFilterConfig.FilterIndex = 0;
+	canFilterConfig.FilterType = FDCAN_FILTER_RANGE;
+	canFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	canFilterConfig.FilterID1 = 0;
+	canFilterConfig.FilterID1 = 100;
+
+	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &canFilterConfig) != HAL_OK){
+		Error_Handler();
+	}
+
+	canHeaderConfig.Identifier = 1;
+	canHeaderConfig.IdType = FDCAN_STANDARD_ID;
+	canHeaderConfig.TxFrameType = FDCAN_DATA_FRAME;
+	canHeaderConfig.DataLength = FDCAN_DLC_BYTES_1;
+	canHeaderConfig.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
+	canHeaderConfig.BitRateSwitch = FDCAN_BRS_OFF;
+	canHeaderConfig.FDFormat = FDCAN_CLASSIC_CAN;
+	canHeaderConfig.MessageMarker = 1;
+
+}
+
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs){
+
+	HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader, rx_data);
+
 }
 /* USER CODE END 4 */
 

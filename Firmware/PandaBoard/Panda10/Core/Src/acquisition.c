@@ -8,20 +8,23 @@
 #include "main.h"
 #include "stm32g4xx_it.h"
 #include "spi_devices.h"
-#include "FIRFilter.h"
 
+#define DMA_FILTER_SIZE 500
 
 TIM_HandleTypeDef *enc_timer;
 
 ADC_HandleTypeDef *adc_handler;
-uint16_t adc_dma_arr[3];
-FIRFilter amp_filter;
+uint16_t adc_dma_arr[3*DMA_FILTER_SIZE];
 DAC_HandleTypeDef *dac_handler;
 uint16_t dac_val;
 
-
 uint16_t getAnalogRead(uint8_t in){
-	return adc_dma_arr[in];
+	uint32_t analog_dma_avg = 0;
+	for(uint32_t i = 0; i < DMA_FILTER_SIZE; i++){
+		analog_dma_avg += adc_dma_arr[(3 * i) + in];
+	}
+	analog_dma_avg /= DMA_FILTER_SIZE;
+	return analog_dma_avg;
 }
 
 
@@ -48,8 +51,7 @@ void acquisitionInit(ADC_HandleTypeDef* hadcx, TIM_HandleTypeDef *htimx, DAC_Han
 	dac_handler = hdacx;
 	enc_timer = htimx;
 
-	HAL_ADC_Start_DMA(adc_handler, (uint32_t *)adc_dma_arr, 3);
-	FIRFilter_init(&amp_filter);
+	HAL_ADC_Start_DMA(adc_handler, (uint32_t *)adc_dma_arr, 3*DMA_FILTER_SIZE);
 
 	HAL_DAC_Start(dac_handler, DAC_CHANNEL_1);
     setOffset(2048);
@@ -59,13 +61,6 @@ void acquisitionInit(ADC_HandleTypeDef* hadcx, TIM_HandleTypeDef *htimx, DAC_Han
 
 	digipotWrite(255);//8.77K
 
-}
-void sendToFilter(){
-	FIRFilter_put(&amp_filter, adc_dma_arr[2]);
-}
-
-uint16_t getFromFilter(){
-	return FIRFilter_get(&amp_filter);
 }
 /*
  * input_val is the actual differential voltage on the input in a 12 bit representation according to:
@@ -142,7 +137,7 @@ uint16_t getActiveGain(){
 uint8_t autoOffset(){//Auto offset routine
 	setOffset(2048);
 	int32_t noffset = 2048;
-	int32_t offset_error =  (getFromFilter() - 32768) / 16 ;
+	int32_t offset_error =  (getAnalogRead(2) - 32768) / 16 ;
 	uint32_t start_tick = HAL_GetTick();
 	while ((offset_error < -OFFSET_THRESHOLD) | (offset_error > OFFSET_THRESHOLD)){
 		if (HAL_GetTick() > start_tick + OFFSET_TIMEOUT){
@@ -155,7 +150,7 @@ uint8_t autoOffset(){//Auto offset routine
 		}
 		setOffset(noffset);
 		HAL_Delay(100);
-		offset_error =  (getFromFilter() - 32768) / 16 ;
+		offset_error =  (getAnalogRead(2) - 32768) / 16 ;
 	}
 	return 1;
 }

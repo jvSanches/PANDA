@@ -63,6 +63,10 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 FDCAN_FilterTypeDef canFilterConfig;
 FDCAN_TxHeaderTypeDef canHeaderConfig;
+FDCAN_RxHeaderTypeDef RxHeader;
+uint8_t rx_data[16];
+uint8_t can_data[3];
+uint8_t can_received = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,12 +85,15 @@ static void MX_FDCAN1_Init(void);
 /* USER CODE BEGIN PFP */
 
 static void CAN_Configure(void);
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int16_t counter = 127;
 int8_t dir = 1;
+uint8_t got_rx = 0;
 /* USER CODE END 0 */
 
 /**
@@ -134,8 +141,9 @@ int main(void)
   acquisitionInit(&hadc1, &htim1, &hdac1);
   CAN_Configure();
   HAL_FDCAN_Start(&hfdcan1);
+  HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
-  uint8_t can_data[1] = {77};
+  can_data[1] = 77;
 
   /* USER CODE END 2 */
 
@@ -143,24 +151,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 //	usbController();
 	userLedController();
-	HAL_Delay(100);
+	HAL_Delay(200);
 	counter += dir;
 	if (counter == 192){
 		dir = -1;
 	}else if(counter == 64){
 		dir = 1;
 	}
-	setUserOutDuty(1, counter);
-	setUserOutDuty(2, counter);
-
-
-	can_data[0]++;
+//	setUserOutDuty(1, counter);
+//	setUserOutDuty(2, counter);
+	if(got_rx){
+		HAL_Delay(1000);
+		got_rx = 0;
+		statusLedBlink();
+	}
+if(((HAL_GetTick() > 2500)&&(can_received == 0))|| (HAL_GetTick() < 1000)){
+	can_data[0] = counter;
 	userLedMode(1);
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &canHeaderConfig, can_data);
 	HAL_Delay(100);
 	userLedMode(0);
+  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -749,23 +763,35 @@ void CAN_Configure(){
 	canFilterConfig.FilterType = FDCAN_FILTER_RANGE;
 	canFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
 	canFilterConfig.FilterID1 = 0;
-	canFilterConfig.FilterID1 = 100;
+	canFilterConfig.FilterID2 = 100;
 
 	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &canFilterConfig) != HAL_OK){
 		Error_Handler();
 	}
 
-	canHeaderConfig.Identifier = 1;
+	canHeaderConfig.Identifier = 5;
 	canHeaderConfig.IdType = FDCAN_STANDARD_ID;
 	canHeaderConfig.TxFrameType = FDCAN_DATA_FRAME;
-	canHeaderConfig.DataLength = FDCAN_DLC_BYTES_1;
+	canHeaderConfig.DataLength = FDCAN_DLC_BYTES_2;
 	canHeaderConfig.ErrorStateIndicator = FDCAN_ESI_PASSIVE;
 	canHeaderConfig.BitRateSwitch = FDCAN_BRS_OFF;
 	canHeaderConfig.FDFormat = FDCAN_CLASSIC_CAN;
 	canHeaderConfig.MessageMarker = 1;
 
+
+
 }
 
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs){
+	if(HAL_GetTick() < 2000){
+		can_received = 1;
+	}
+	HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader, rx_data);
+	if(can_received == 0){
+		statusLedOn();
+		got_rx = 1;
+	}
+}
 /* USER CODE END 4 */
 
 /**
